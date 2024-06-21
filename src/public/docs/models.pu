@@ -1,0 +1,28 @@
+@startuml
+
+!define model << (M,LightSalmon) >>
+!define schema << (M,LightBlue) >>
+
+title Data Models
+
+class User model {
+  +firstName: String
+  +lastName: String
+  +userName: String
+  +password: String
+  +status: Number
+  +avatar: Object
+  == Virtual ==
+  +fullName: String
+  +url: String
+}
+
+class Message model {
+  +title: String
+  +body: String
+  +author: User
+}
+
+Message -- "1" User
+
+@enduml
