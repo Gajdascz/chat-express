@@ -7,6 +7,7 @@ import upload from './libs/multer.js';
 import rateLimit from './libs/rateLimit.js';
 import expressMiddleware from './libs/express.js';
 import errorHandler from './libs/errorHandler.js';
+import bcryptHash from './libs/bcryptHash.js';
 
 // prettier-ignore
 const baseMiddleware = [
@@ -19,4 +20,9 @@ const baseMiddleware = [
 ];
 
 // prettier-ignore
-export {baseMiddleware, errorHandler, upload}
+export { 
+  baseMiddleware, // Middleware that is immediately set on the express app 
+  errorHandler,   // Catches errors at the end of the middleware chain
+  upload,         // Multer function that stores form-uploaded images in memory
+  bcryptHash      // Hashes and updates req.body.password
+};

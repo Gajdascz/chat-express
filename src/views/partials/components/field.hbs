@@ -1,0 +1,18 @@
+<div class='field-container'>
+  <label for='{{id}}' {{#if hideLabel}}style='display:none;'{{/if}}>{{label}}</label>
+  <div class="field-input-wrapper">
+  {{#with leftButton}}
+    {{> button }}
+  {{/with}}
+
+  {{#if textarea }}
+    {{> textarea }}
+  {{else}}
+    {{> input}}
+  {{/if}}
+  
+  {{#with rightButton}}
+    {{> button}}
+  {{/with}}
+  </div>
+</div>

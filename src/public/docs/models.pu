@@ -21,6 +21,8 @@ class Message model {
   +title: String
   +body: String
   +author: User
+  == Virtual ==
+  +url: String
 }
 
 Message -- "1" User
