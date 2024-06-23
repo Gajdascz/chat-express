@@ -2,6 +2,7 @@ import { readdir } from 'node:fs/promises';
 import path from 'node:path';
 import createDebug from 'debug';
 import { DateTime } from 'luxon';
+import { P_VIEWS } from './constants.js';
 
 // Server
 const getDebug = (namespace) => createDebug(`members-only:${namespace}`);
@@ -35,9 +36,7 @@ const getHbsChatboxContext = (overrides) => ({
   placeholder: 'Enter your message here',
   label: 'Message',
   hideLabel: true,
-  rightButton: {
-    text: 'Send',
-  },
+  rightButton: { text: 'Send' },
 });
 
 export { getDebug, getSubDirectories, capitalize, formatTimestamp, handlebarsHelpers, getHbsChatboxContext };

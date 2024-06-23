@@ -1,18 +1,8 @@
 <div class='field-container'>
   <label for='{{id}}' {{#if hideLabel}}style='display:none;'{{/if}}>{{label}}</label>
-  <div class="field-input-wrapper">
-  {{#with leftButton}}
-    {{> button }}
-  {{/with}}
-
   {{#if textarea }}
-    {{> textarea }}
+    <textarea name='{{name}}' id='{{id}}' placeholder='{{placeholder}}' required="{{required}}"></textarea>
   {{else}}
-    {{> input}}
+    <input type='{{type}}' name='{{name}}' id='{{id}}' placeholder='{{placeholder}}' required="{{required}}"/>
   {{/if}}
-  
-  {{#with rightButton}}
-    {{> button}}
-  {{/with}}
-  </div>
 </div>

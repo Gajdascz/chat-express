@@ -2,9 +2,22 @@
   <h1 class='nav-header'>
     <a href='/' class='nav-header-link'>ChatExpress</a>
   </h1>
-  <div class='nav-links'>
-    <a href=''>Register</a>
-    <a href=''>Login</a>
-    <a href=''>Profile</a>
+  <div class='nav-menu'>
+    {{#if loggedIn}}
+      <div class='nav-profile-container'>
+        <!-- cloudinary avatar -->
+        <div class='nav-profile-options-wrapper'>
+          <a href='/user/{{userId}}'>Profile</a>
+          <form method='POST' action='/user/logout/{{userId}}'>
+            <button class=''>Logout</button>
+          </form>
+        </div>
+      </div>
+    {{else}}
+      <div class='nav-action-links-wrapper'>
+        <a class='nav-link' href='/register'>Sign up</a>
+        <a class='nav-link' href='/login'>Login</a>
+      </div>
+    {{/if}}
   </div>
 </nav>

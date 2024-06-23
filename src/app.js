@@ -9,8 +9,7 @@ import { baseMiddleware, errorHandler } from './config/middleware/index.js';
 // Utils
 import { getDebug } from './utils/helpers.js';
 
-// Routers
-import indexRouter from './routers/indexRouter.js';
+import appController from './controllers/appController.js';
 
 // 0. Load environment variables into process.env
 import './config/core/dotenv.js';
@@ -31,9 +30,10 @@ initHbs(app);
 app.use(baseMiddleware);
 
 // 6. Set Base Routes
-app.get('/', indexRouter);
+app.get('/', appController.getIndex);
+app.get('/login', appController.getLogin);
 
 // -1. Set ErrorHandler Middleware Last
-app.use(errorHandler);
+app.use(errorHandler('error'));
 
 export default app;

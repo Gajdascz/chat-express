@@ -1,0 +1,9 @@
+<section class="login-page">
+  <form method='POST' action="/login" class="card">
+    <h1 class="card-header">Login</h1>
+    {{>field placeholder='Username' type='text' id='username' required=true label='Username' hideLabel=true}}
+    {{>field placeholder='Password' type='password' id='password' required=true label='Password' hideLabel=true}} 
+    <a href="/recover">Forgot password?</a>
+    <button class="primary">Log in</button>
+  </form>
+</section>
