@@ -1,0 +1,25 @@
+<section class="register-page">
+  <form method='POST' action="/register" class="card" enctype="multipart/form-data">
+    <h1 class="card-header">Register</h1>
+    {{>field placeholder='Profile Avatar' type='file' accept='image/*' id='avatar' required=false label='Profile Avatar' hideLabel=false}}
+    {{>field placeholder='Email' type='text' id='email' required=false label='Email' hideLabel=true}} 
+    <div class="paired-fields">
+      {{>field placeholder='First Name' type='text' id='first-name' required=false label='First name' hideLabel=true}}
+      {{>field placeholder='Last Name' type='text' id='last-name' required=false label='Last name' hideLabel=true}} 
+    </div>
+    {{>field placeholder='Username*' type='text' id='username' required=true label='Username' hideLabel=true}}
+    <div class="paired-fields">
+      {{>field placeholder='Password*' type='password' id='password' required=true label='Password' hideLabel=true}} 
+      {{>field placeholder='Confirm Password*' type='password' id='confirm-password' required=true label='Confirm Password' hideLabel=true}}
+    </div>
+    <label for="recovery-question" style="display:none;">Recovery Question</label>
+    <select name="recovery-question" id="recovery-question">
+      {{#each recoveryQuestions}}
+      <option value="{{this}}">{{this}}</option>
+      {{/each}}
+    </select>
+    {{>field placeholder='Recovery Question Answer*' type='text' id='recovery-question-answer' required=true label='Recovery Question Answer' hideLabel=true}}
+    <button class="primary">Submit</button>
+    <p class="card-secondary-text">Already Registered? <a href="/login">Login</a></p>
+  </form>
+</section>

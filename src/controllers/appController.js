@@ -9,9 +9,6 @@ const appController = {
       chatbox: getHbsChatboxContext(),
     });
   }),
-  register: asyncHandler(async (req, res, next) => {}),
-  getLogin: (req, res, next) => res.render('login'),
-  login: [bcryptHash, asyncHandler(async (req, res, next) => {})],
 };
 
 export default appController;

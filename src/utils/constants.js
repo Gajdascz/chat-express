@@ -16,4 +16,28 @@ const P_VIEWS = {
 
 const USER_STATUSES = { BASIC: 'basic', MEMBER: 'member', ADMIN: 'admin' };
 
-export { SUCCESS, FAIL, P_ROOT, P_SRC, P_PUBLIC, P_VIEWS, USER_STATUSES };
+const MESSAGE_REACTIONS = {
+  LIKE: 'like',
+  DISLIKE: 'dislike',
+};
+
+const FORM_SUBMITTER_CLIENT_SCRIPT = '<script src="../scripts/formSubmitter.js" type="module" defer></script>';
+
+const RECOVERY_QUESTIONS = [
+  'What was your dream job growing up?',
+  'What is your favorite animal?',
+  'Who is your favorite musician?',
+];
+
+export {
+  SUCCESS,
+  FAIL,
+  P_ROOT,
+  P_SRC,
+  P_PUBLIC,
+  P_VIEWS,
+  USER_STATUSES,
+  MESSAGE_REACTIONS,
+  FORM_SUBMITTER_CLIENT_SCRIPT,
+  RECOVERY_QUESTIONS,
+};

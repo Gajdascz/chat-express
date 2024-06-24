@@ -21,15 +21,6 @@
   --shadow-dark: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--color-primary);
-}
-
 body {
   background-color: var(--color-background);
   color: var(--color-text);
@@ -62,7 +53,6 @@ main {
   width: 100%;
   margin: 0 auto;
   padding: 1em;
-  overflow-x: hidden;
   text-overflow: ellipsis;
 }
 
@@ -87,11 +77,13 @@ button.primary {
   border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 1em;
+  box-shadow: var(--shadow-light);
 }
 
 button.primary:hover {
   background-color: var(--color-accent);
   color: var(--color-primary);
+  box-shadow: var(--shadow-dark);
 }
 
 .error-message {
@@ -103,6 +95,7 @@ button.primary:hover {
   display: flex;
   flex-direction: column;
 }
+select,
 .field-container > input {
   display: flex;
   padding: 0.5em;
@@ -112,11 +105,35 @@ button.primary:hover {
   border: 2px solid var(--color-primary);
   cursor: text;
 }
+.field-container > input[type='file'] {
+  overflow: hidden;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  max-width: 400px;
+  cursor: default;
+}
+.field-container > label {
+  font-size: 1.25rem;
+}
+.paired-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  justify-content: center;
+  align-items: flex-end;
+}
+.paired-fields > * {
+  flex: 1;
+}
 /*#endregion*/
 
 .chatbox-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  padding: 1em;
+  box-shadow: var(--shadow-medium);
+  border-radius: 20px;
 }
 
 .chatbox-message-input-wrapper {
@@ -141,6 +158,7 @@ button.primary:hover {
   flex: 0;
 }
 
+.register-page,
 .login-page {
   display: flex;
   flex-direction: column;
@@ -161,4 +179,10 @@ button.primary:hover {
 }
 .card-header {
   font-size: 2.5rem;
+}
+.card-secondary-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
 }

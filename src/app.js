@@ -1,3 +1,6 @@
+// 0. Load environment variables into process.env
+import './config/core/dotenv.js';
+
 // Core
 import express from 'express';
 import { mongoConnect } from './config/core/db.js';
@@ -10,9 +13,7 @@ import { baseMiddleware, errorHandler } from './config/middleware/index.js';
 import { getDebug } from './utils/helpers.js';
 
 import appController from './controllers/appController.js';
-
-// 0. Load environment variables into process.env
-import './config/core/dotenv.js';
+import userRouter from './routers/userRouter.js';
 
 // 1. Init debugger for this file
 const debug = getDebug('config-index');
@@ -31,7 +32,7 @@ app.use(baseMiddleware);
 
 // 6. Set Base Routes
 app.get('/', appController.getIndex);
-app.get('/login', appController.getLogin);
+app.use('/user', userRouter);
 
 // -1. Set ErrorHandler Middleware Last
 app.use(errorHandler('error'));
