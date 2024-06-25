@@ -2,7 +2,6 @@ import { readdir } from 'node:fs/promises';
 import path from 'node:path';
 import createDebug from 'debug';
 import { DateTime } from 'luxon';
-import { P_VIEWS } from './constants.js';
 
 // Server
 const getDebug = (namespace) => createDebug(`members-only:${namespace}`);
@@ -15,19 +14,21 @@ const getSubDirectories = async (baseDir, includeBase = false) => {
     if (includeBase) subDirs.push(baseDir);
     return subDirs;
   } catch (err) {
-    throw err;
+    console.err(err);
   }
 };
 
 // Common
 const capitalize = (str) => `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
 const formatTimestamp = (isoTimeStamp) => DateTime.fromISO(isoTimeStamp).toLocaleString(DateTime.DATETIME_SHORT);
-
+const camelCase = (str) =>
+  str.toLowerCase().replace(/([-_][a-z])/g, (group) => group.toUpperCase().replace('-', '').replace('_', ''));
 // hbs
 const handlebarsHelpers = {
   capitalize,
   formatTimestamp,
   default: (provided, fallback) => provided ?? fallback,
+  camelCase,
 };
 const getHbsChatboxContext = (overrides) => ({
   id: 'chatbox-textarea',
@@ -39,4 +40,4 @@ const getHbsChatboxContext = (overrides) => ({
   rightButton: { text: 'Send' },
 });
 
-export { getDebug, getSubDirectories, capitalize, formatTimestamp, handlebarsHelpers, getHbsChatboxContext };
+export { getDebug, getSubDirectories, capitalize, formatTimestamp, handlebarsHelpers, getHbsChatboxContext, camelCase };

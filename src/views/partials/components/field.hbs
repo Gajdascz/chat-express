@@ -1,8 +1,15 @@
 <div class='field-container'>
   <label for='{{id}}' {{#if hideLabel}}style='display:none;'{{/if}}>{{label}}</label>
   {{#if textarea }}
-    <textarea name='{{name}}' id='{{id}}' placeholder='{{placeholder}}' {{#if required}}required{{/if}}></textarea>
+    <textarea name='{{camelCase id}}' id='{{id}}' placeholder='{{placeholder}}' {{#if required}}required{{/if}}></textarea>
   {{else}}
-    <input type='{{type}}' name='{{name}}' id='{{id}}' placeholder='{{placeholder}}' {{#if required}}required{{/if}}/>
+    {{#if select}} 
+      <select id="{{id}}" name="{{camelCase id}}">
+        {{#each options}}<option value="{{this}}">{{this}}</option>{{/each}}
+      </select>
+    {{else}}
+      <input type='{{type}}' name='{{camelCase id}}' id='{{id}}' placeholder='{{placeholder}}' {{#if required}}required{{/if}}/>
+    {{/if}}
   {{/if}}
+  <div class="field-error-container"></div>
 </div>

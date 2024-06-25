@@ -14,7 +14,9 @@
   --color-accent: var(--color-selective-yellow);
   --color-tertiary: var(--color-sky-blue);
   --color-interactive: var(--color-ut-orange);
+
   --color-error: #ff3b3b;
+  --color-valid: #005a00;
 
   --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   --shadow-medium: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -114,6 +116,23 @@ select,
 }
 .field-container > label {
   font-size: 1.25rem;
+}
+.field-container > *[data-status='invalid'] {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+.field-container > *[data-status='valid'] {
+  border-color: var(--color-valid);
+  color: var(--color-valid);
+}
+.field-container > *[data-status='pending'] {
+  border-color: var(--color-secondary);
+  color: var(--color-text);
+}
+.field-container > .field-error-container {
+  color: var(--color-error);
+  font-style: italic;
+  font-size: 1rem;
 }
 .paired-fields {
   display: flex;

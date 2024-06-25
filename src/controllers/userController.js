@@ -1,11 +1,10 @@
 import asyncHandler from 'express-async-handler';
 import { FORM_SUBMITTER_CLIENT_SCRIPT, RECOVERY_QUESTIONS } from '../utils/constants.js';
+import registerUser from '../config/middleware/libs/registerUser.js';
 
 const userController = {
   getLogin: (req, res, next) => {
-    res.render('login', {
-      scripts: FORM_SUBMITTER_CLIENT_SCRIPT,
-    });
+    res.render('login', {});
   },
   postLogin: (req, res, next) => {},
   getRegister: (req, res, next) => {
@@ -14,7 +13,7 @@ const userController = {
       recoveryQuestions: RECOVERY_QUESTIONS,
     });
   },
-  postRegister: (req, res, next) => {},
+  postRegister: [registerUser],
 };
 
 export default userController;

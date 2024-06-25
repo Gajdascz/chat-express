@@ -9,4 +9,9 @@ router.post('/login', userController.postLogin);
 router.get('/register', userController.getRegister);
 router.post('/register', userController.postRegister);
 
+router.get('/recover');
+router.post('/recover');
+router.get('/recover/:id');
+router.post('/recover/:id');
+
 export default router;

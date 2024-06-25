@@ -6,8 +6,13 @@ const isLength = (min, max) => ({
 });
 const isEmail = () => ({ isEmail: true, errorMessage: `Invalid email. Must be in format name@domain.ext` });
 const isUrl = () => ({ isURL: true, errorMessage: `Must be a valid URL` });
-const isEnum = (values) => ({ isUrl: true, errorMessage: `Must be one of: ${values.join(', ')}` });
-
+const isIn = (values) => ({ isIn: [values], errorMessage: `Must be one of: ${values.join(', ')}` });
+const isEqual = (bodyProperty) => ({
+  custom: {
+    options: (value, { req }) => value === req.body[bodyProperty],
+    errorMessage: `Must equal ${bodyProperty}`,
+  },
+});
 const onlyLetters = () => ({ matches: { options: /^[a-zA-Z]$/, errorMessage: `Must only contain letters` } });
 
 const noSpecialChars = () => ({
@@ -37,7 +42,8 @@ export {
   isLength,
   isEmail,
   isUrl,
-  isEnum,
+  isIn,
+  isEqual,
   onlyLetters,
   noSpecialChars,
   containsSpecialChar,

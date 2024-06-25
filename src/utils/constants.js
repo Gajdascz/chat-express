@@ -29,6 +29,8 @@ const RECOVERY_QUESTIONS = [
   'Who is your favorite musician?',
 ];
 
+const DEFAULT_AVATAR_PUBLIC_ID = 'membersOnly/default-avatar.png';
+
 export {
   SUCCESS,
   FAIL,
@@ -40,4 +42,5 @@ export {
   MESSAGE_REACTIONS,
   FORM_SUBMITTER_CLIENT_SCRIPT,
   RECOVERY_QUESTIONS,
+  DEFAULT_AVATAR_PUBLIC_ID,
 };
