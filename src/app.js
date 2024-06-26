@@ -33,6 +33,9 @@ app.use(baseMiddleware);
 // 6. Set Base Routes
 app.get('/', appController.getIndex);
 app.use('/user', userRouter);
+app.get('/error', (req, res) =>
+  res.render('error', { error: { msg: req.query.msg, status: req.query.status, stack: req.query.stack } })
+);
 
 // -1. Set ErrorHandler Middleware Last
 app.use(errorHandler('error'));

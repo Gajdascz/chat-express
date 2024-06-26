@@ -11,7 +11,6 @@ const P_VIEWS = {
   MAIN: path.join(P_SRC, 'views'),
   LAYOUTS: path.join(P_SRC, 'views', 'layouts'),
   PARTIALS: path.join(P_SRC, 'views', 'partials'),
-  PAGES: path.join(P_SRC, 'views', 'pages'),
 };
 
 const USER_STATUSES = { BASIC: 'basic', MEMBER: 'member', ADMIN: 'admin' };
@@ -29,8 +28,7 @@ const RECOVERY_QUESTIONS = [
   'Who is your favorite musician?',
 ];
 
-const DEFAULT_AVATAR_PUBLIC_ID = 'membersOnly/default-avatar.png';
-
+const AVATAR_PUBLIC_IDS = ['original', 'thumb', 'profile'];
 export {
   SUCCESS,
   FAIL,
@@ -42,5 +40,5 @@ export {
   MESSAGE_REACTIONS,
   FORM_SUBMITTER_CLIENT_SCRIPT,
   RECOVERY_QUESTIONS,
-  DEFAULT_AVATAR_PUBLIC_ID,
+  AVATAR_PUBLIC_IDS,
 };

@@ -1,16 +1,42 @@
-import { checkSchema } from 'express-validator';
 import processValidationResult from './base/processValidationResult.js';
-import { username, password, firstName, lastName, email, status, avatar, confirmPassword } from './base/fields.js';
+import {
+  username,
+  password,
+  firstName,
+  lastName,
+  email,
+  confirmPassword,
+  recoveryQuestion,
+  recoveryQuestionAnswer,
+} from './base/fields.js';
+import { setHashKeys, hash } from './base/hash.js';
 
-const userRegistrationValidationSchema = [username, password, confirmPassword, firstName, lastName, email]
-  .map((field) => field.getValidation())
-  .reduce((acc, curr) => ({ ...acc, ...curr }));
+const userRegistrationValidationChain = [
+  username,
+  password,
+  confirmPassword,
+  firstName,
+  lastName,
+  email,
+  recoveryQuestion,
+  recoveryQuestionAnswer,
+].map((field) => field.getValidationChain());
 
-const userModelSchemaTypes = [username, password, confirmPassword, firstName, lastName, email, status, avatar]
+const userModelSchemaTypes = [username, password, firstName, lastName, email, recoveryQuestion, recoveryQuestionAnswer]
   .map((field) => field.getSchemaType())
   .reduce((acc, curr) => ({ ...acc, ...curr }));
 
-console.log(userRegistrationValidationSchema);
-const userRegistrationMiddleware = [checkSchema(userRegistrationValidationSchema), processValidationResult];
+const deleteConfirmPassword = (req, res, next) => {
+  delete req.body.confirmPassword;
+  next();
+};
+
+const userRegistrationMiddleware = [
+  userRegistrationValidationChain,
+  processValidationResult,
+  deleteConfirmPassword,
+  setHashKeys(['password', 'recoveryQuestionAnswer']),
+  hash,
+];
 
 export { userModelSchemaTypes, userRegistrationMiddleware };

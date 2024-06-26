@@ -1,44 +1,32 @@
-const escapeTrim = () => ({ trim: true, escape: true });
-const optional = () => ({ optional: { nullable: true, checkFalsy: true } });
+const isLength = (chain, min, max, type = 'characters') =>
+  chain.isLength({ min, max }).withMessage(`Must be between ${min} and ${max} ${type}`);
 
-const isLength = (min, max) => ({
-  isLength: { options: { min, max }, errorMessage: `Must be between ${min} and ${max} characters` },
-});
-const isEmail = () => ({ isEmail: true, errorMessage: `Invalid email. Must be in format name@domain.ext` });
-const isUrl = () => ({ isURL: true, errorMessage: `Must be a valid URL` });
-const isIn = (values) => ({ isIn: [values], errorMessage: `Must be one of: ${values.join(', ')}` });
-const isEqual = (bodyProperty) => ({
-  custom: {
-    options: (value, { req }) => value === req.body[bodyProperty],
-    errorMessage: `Must equal ${bodyProperty}`,
-  },
-});
-const onlyLetters = () => ({ matches: { options: /^[a-zA-Z]$/, errorMessage: `Must only contain letters` } });
+const isEmail = (chain) => chain.isEmail().withMessage('Must be a correctly formatted email address');
 
-const noSpecialChars = () => ({
-  custom: {
-    options: (str) => /^[a-zA-Z0-9_]+$/.test(str),
-    errorMessage: `Must only contain letters, numbers, and/or underscores (_)`,
-  },
-});
-const containsSpecialChar = () => ({
-  matches: {
-    options: /[!@#$%^&*()-_=+[\]{}|\\;:'",<.>/?]/,
-    errorMessage: `Must contain at least one special character`,
-  },
-});
-const containsLowercase = () => ({
-  matches: { options: /[a-z]/, errorMessage: `Must contain at least one uppercase character` },
-});
-const containsUppercase = () => ({
-  matches: { options: /[A-Z]/, errorMessage: `Must contain at least one lowercase character` },
-});
-const containsDigit = () => ({
-  matches: { options: /[0-9]/, errorMessage: `Must contain at least one digit` },
-});
+const isUrl = (chain) => chain.isURL().withMessage('Must be a correctly formatted url address');
+
+const isIn = (chain, values) => chain.isIn(values).withMessage(`Must be one of: ${values.join(', ')}`);
+
+const isEqual = (chain, bodyProperty) =>
+  chain
+    .custom((value, { req }) => value === req.body[bodyProperty])
+    .withMessage(`Must be equal to the provided ${bodyProperty}`);
+
+const onlyLetters = (chain) => chain.matches(/^[a-zA-Z]+$/).withMessage('Must only contain letters');
+
+const noSpecialChars = (chain) =>
+  chain.matches(/^[a-zA-Z0-9_]+$/).withMessage(`Must only contain letters, numbers, and underscores (_)`);
+
+const containsSpecialChar = (chain) =>
+  chain.matches(/[!@#$%^&*()-_=+[\]{}|\\;:'",<.>/?]/).withMessage(`Must contain at least one special character`);
+
+const containsLowercase = (chain) => chain.matches(/[a-z]/).withMessage(`Must contain at least one lower case letter`);
+
+const containsUppercase = (chain) => chain.matches(/[A-Z]/).withMessage(`Must contain at least one capital letter`);
+
+const containsDigit = (chain) => chain.matches(/\d/).withMessage(`Must contain at least one number`);
+
 export {
-  escapeTrim,
-  optional,
   isLength,
   isEmail,
   isUrl,

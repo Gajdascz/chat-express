@@ -14,4 +14,6 @@ router.post('/recover');
 router.get('/recover/:id');
 router.post('/recover/:id');
 
+router.get('/:id', userController.getUser);
+
 export default router;

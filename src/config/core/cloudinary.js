@@ -7,4 +7,43 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export default cloudinary;
+const avatar = {
+  transforms: {
+    original: [],
+    thumb: [{ width: 64, height: 64, aspect_ratio: 1.0, crop: 'fill' }, { radius: 'max' }, { fetch_format: 'auto' }],
+    profile: [
+      { width: 250, height: 250, aspect_ratio: 1.0, crop: 'fill' },
+      { radius: 'max' },
+      { fetch_format: 'auto' },
+    ],
+  },
+  getDefault: () => ({
+    thumb: 'https://res.cloudinary.com/dpya8ss9n/image/upload/v1719341638/members_only/_default/thumb.png',
+    profile: 'https://res.cloudinary.com/dpya8ss9n/image/upload/v1719341921/members_only/_default/profile.png',
+  }),
+  upload: async function (userId, filePath) {
+    if (!filePath) return avatar.getDefault();
+    try {
+      const results = await Promise.all(
+        ['original', 'thumb', 'profile'].forEach((publicId) =>
+          cloudinary.uploader.upload(filePath, {
+            resource_type: 'image',
+            folder: `members_only/${userId}`,
+            public_id: publicId,
+            transformation: avatar.transforms[publicId],
+            overwrite: true,
+          })
+        )
+      );
+      return results.map((result) => result.secure_url);
+    } catch (err) {
+      console.error(`Error uploading Images:`, err);
+      throw err;
+    }
+  },
+};
+
+const uploadAvatar = avatar.upload;
+const getDefaultAvatar = avatar.getDefault;
+
+export { uploadAvatar, getDefaultAvatar };

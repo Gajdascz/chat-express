@@ -1,6 +1,4 @@
 import {
-  escapeTrim,
-  optional,
   isLength,
   isEmail,
   onlyLetters,
@@ -10,174 +8,155 @@ import {
   containsUppercase,
   containsDigit,
   isEqual,
+  isIn,
 } from './rules.js';
-import { USER_STATUSES } from '../../../../../../utils/constants.js';
+import { RECOVERY_QUESTIONS } from '../../../../../../utils/constants.js';
 import { body } from 'express-validator';
-
-const errorMsg = {
-  length: (min, max) => `Must be between ${min} and ${max} characters`,
-};
+const buildChain = (field, config) => config.reduce((chain, validator) => validator(chain), body(field).trim());
 
 const username = {
-  props: { selector: 'username', minLength: 1, maxLength: 32 },
+  field: 'username',
+  minLength: 1,
+  maxLength: 32,
   getSchemaType: function () {
-    return {
-      [this.props.selector]: {
-        type: String,
-        required: true,
-        minLength: this.props.minLength,
-        maxLength: this.props.maxLength,
-        unique: true,
-      },
-    };
+    const { minLength, maxLength, field } = this;
+    return { [field]: { type: String, required: true, minLength, maxLength, unique: true } };
   },
-  getValidation: function () {
+  getValidationConfig: function () {
+    const { minLength, maxLength } = this;
     return [
-      body(this.props.selector)
-        .trim()
-        .escape()
-        .isLength({ min: this.minLength, max: this.maxLength })
-        .withMessage(errorMsg.length(this.props.minLength, this.props.maxLength))
-        .matches(/^[a-zA-Z0-9_]+$/)
-        .withMessage(`Must only contain letters, numbers, and/or underscores (_)`),
+      (chain) => chain.trim(),
+      (chain) => isLength(chain, minLength, maxLength),
+      (chain) => noSpecialChars(chain),
     ];
+  },
+  getValidationChain: function () {
+    return buildChain(this.field, this.getValidationConfig());
   },
 };
 
 const password = {
-  props: { selector: 'password', minLength: 8, maxLength: 50 },
+  field: 'password',
+  minLength: 8,
+  maxLength: 50,
   getSchemaType: function () {
-    return {
-      [this.props.selector]: {
-        type: String,
-        required: true,
-        minLength: this.props.minLength,
-        maxLength: this.props.maxLength,
-      },
-    };
+    const { field, minLength, maxLength } = this;
+    return { [field]: { type: String, required: true, minLength, maxLength } };
   },
-  getValidation: function () {
+  getValidationConfig: function () {
+    const { minLength, maxLength } = this;
     return [
-      body(this.props.selector)
-        .trim()
-        .isLength({ min: this.props.minLength, max: this.props.maxLength })
-        .withMessage(errorMsg.length({ min: this.props.minLength, max: this.props.maxLength }))
-        .matches(/\d/)
-        .withMessage(`Must contain at least one number`)
-        .matches(/[a-z]/)
-        .withMessage(`Must contain at least one lower case letter`)
-        .matches(/[A-Z]/)
-        .withMessage(`Must contain at least one capital letter`)
-        .matches(/[!@#$%^&*()-_=+[\]{}|\\;:'",<.>/?]/)
-        .withMessage(`Must contain at least one special character`),
+      (chain) => isLength(chain, minLength, maxLength),
+      (chain) => containsDigit(chain),
+      (chain) => containsLowercase(chain),
+      (chain) => containsUppercase(chain),
+      (chain) => containsSpecialChar(chain),
     ];
+  },
+  getValidationChain: function () {
+    return buildChain(this.field, this.getValidationConfig());
   },
 };
 
 const confirmPassword = {
-  props: {
-    selector: 'confirmPassword',
-  },
+  field: 'confirmPassword',
+  compareField: 'password',
   getSchemaType: () => {},
-  getValidation: function () {
-    return [
-      body(this.props.selector)
-        .trim()
-        .custom((value, { req }) => {
-          if (value !== req.body.password) throw new Error(`Passwords are not equal.`);
-          return true;
-        }),
-    ];
+  getValidationConfig: function () {
+    return [(chain) => isEqual(chain, this.compareField)];
+  },
+  getValidationChain: function () {
+    return buildChain(this.field, this.getValidationConfig());
   },
 };
 
 const firstName = {
-  props: { selector: 'firstName', minLength: 2, maxLength: 50 },
+  field: 'firstName',
+  minLength: 2,
+  maxLength: 50,
   getSchemaType: function () {
-    return {
-      [this.props.selector]: {
-        type: String,
-        required: true,
-        minLength: this.props.minLength,
-        maxLength: this.props.maxLength,
-      },
-    };
+    const { field, minLength, maxLength } = this;
+    return { [field]: { type: String, required: true, minLength, maxLength } };
   },
-  getValidation: function (isOptional = true) {
+  getValidationConfig: function () {
+    const { minLength, maxLength } = this;
     return [
-      body(this.props.selector)
-        .trim()
-        .escape()
-        .optional(isOptional)
-        .matches(/^[a-zA-Z]$/)
-        .withMessage(`Must only contain letters`)
-        .isLength({ min: this.props.minLength, max: this.props.maxLength }),
+      (chain) => chain.escape(),
+      (chain) => chain.optional(true),
+      (chain) => onlyLetters(chain),
+      (chain) => isLength(chain, minLength, maxLength),
     ];
+  },
+  getValidationChain: function () {
+    return buildChain(this.field, this.getValidationConfig());
   },
 };
 
 const lastName = {
-  props: { selector: 'lastName', minLength: 2, maxLength: 50 },
+  field: 'lastName',
+  minLength: 2,
+  maxLength: 50,
   getSchemaType: function () {
-    return {
-      [this.props.selector]: {
-        type: String,
-        required: true,
-        minLength: this.props.minLength,
-        maxLength: this.props.maxLength,
-      },
-    };
+    const { field, minLength, maxLength } = this;
+    return { [field]: { type: String, required: true, minLength, maxLength } };
   },
-  getValidation: function (isOptional = true) {
+  getValidationConfig: function () {
+    const { minLength, maxLength } = this;
     return [
-      body(this.props.selector)
-        .trim()
-        .escape()
-        .optional(isOptional)
-        .matches(/^[a-zA-Z]$/)
-        .withMessage(`Must only contain letters`)
-        .isLength({ min: this.props.minLength, max: this.props.maxLength }),
+      (chain) => chain.escape(),
+      (chain) => chain.optional(true),
+      (chain) => onlyLetters(chain),
+      (chain) => isLength(chain, minLength, maxLength),
     ];
+  },
+  getValidationChain: function () {
+    return buildChain(this.field, this.getValidationConfig());
   },
 };
 
 const email = {
-  props: { selector: 'email' },
+  field: 'email',
   getSchemaType: function () {
-    return {
-      [this.props.selector]: {
-        type: String,
-        required: false,
-      },
-    };
+    const { field } = this;
+    return { [field]: { type: String, required: false } };
   },
-  getValidation: function (isOptional = true) {
-    return [
-      body(this.props.selector)
-        .trim()
-        .escape()
-        .optional(isOptional)
-        .isEmail()
-        .withMessage(`Must be a correctly formatted email address`)
-        .isLength({ min: this.props.minLength, max: this.props.maxLength }),
-    ];
+  getValidationConfig: function () {
+    return [(chain) => chain.escape(), (chain) => chain.optional(true), (chain) => isEmail(chain)];
+  },
+  getValidationChain: function () {
+    return buildChain(this.field, this.getValidationConfig());
   },
 };
 
-const status = {
-  props: { selector: 'status', values: Object.values(USER_STATUSES) },
+const recoveryQuestion = {
+  field: 'recoveryQuestion',
   getSchemaType: function () {
-    return { [this.props.selector]: { type: String, enum: this.props.values, default: USER_STATUSES.BASIC } };
+    const { field } = this;
+    return { [field]: { type: String, enum: RECOVERY_QUESTIONS, required: true } };
   },
-  getValidation: () => {},
+  getValidationConfig: function () {
+    return [(chain) => isIn(chain, RECOVERY_QUESTIONS)];
+  },
+  getValidationChain: function () {
+    return buildChain(this.field, this.getValidationConfig());
+  },
 };
 
-const avatar = {
-  props: { selector: 'avatar' },
+const recoveryQuestionAnswer = {
+  field: 'recoveryQuestionAnswer',
+  minLength: 3,
+  maxLength: 25,
   getSchemaType: function () {
-    return { [this.props.selector]: { url: { type: String, required: true } } };
+    const { field } = this;
+    return { [field]: { type: String, required: false } };
   },
-  getValidation: () => {},
+  getValidationConfig: function () {
+    const { minLength, maxLength } = this;
+    return [(chain) => chain.trim().escape().toLowerCase(), (chain) => isLength(chain, minLength, maxLength)];
+  },
+  getValidationChain: function () {
+    return buildChain(this.field, this.getValidationConfig());
+  },
 };
 
-export { username, password, confirmPassword, firstName, lastName, email, status, avatar };
+export { username, password, confirmPassword, firstName, lastName, email, recoveryQuestion, recoveryQuestionAnswer };

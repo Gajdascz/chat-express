@@ -8,7 +8,13 @@
         {{#each options}}<option value="{{this}}">{{this}}</option>{{/each}}
       </select>
     {{else}}
-      <input type='{{type}}' name='{{camelCase id}}' id='{{id}}' placeholder='{{placeholder}}' {{#if required}}required{{/if}}/>
+      <input 
+        type='{{type}}'
+        name='{{camelCase id}}' 
+        id='{{id}}' 
+        placeholder='{{placeholder}}' 
+        {{#if accept}}accept="{{accept}}"{{/if}} 
+        {{#if required}}required{{/if}}/>
     {{/if}}
   {{/if}}
   <div class="field-error-container"></div>

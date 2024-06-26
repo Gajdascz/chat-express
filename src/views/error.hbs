@@ -1,13 +1,10 @@
-<html lang='en'>
-  <head>
-    <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>{{default title 'Error'}}</title>
-  </head>
-  <body>
+<section class='error-page'>
+  {{#with error}}
     <h1>{{default title 'Error'}}</h1>
-    <pre>
-      {{error.stack}}
-    </pre>
-  </body>
-</html>
+    <h2>{{status}}</h2>
+    <pre>{{stack}}</pre>
+  {{/with}}
+  <div>
+    <a href='/' class='link-button'>Home</a>
+  </div>
+</section>

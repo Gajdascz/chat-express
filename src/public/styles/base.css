@@ -133,6 +133,8 @@ select,
   color: var(--color-error);
   font-style: italic;
   font-size: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 .paired-fields {
   display: flex;
