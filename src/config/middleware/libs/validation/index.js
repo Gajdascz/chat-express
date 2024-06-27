@@ -1,20 +1,23 @@
-import { username, password, firstName, lastName, email, status, avatar } from './definitions/base/fields.js';
+import {
+  username,
+  password,
+  firstName,
+  lastName,
+  email,
+  confirmPassword,
+  recoveryQuestion,
+  recoveryQuestionAnswer,
+} from './core/fields.js';
 
-const user = {
-  all: [username, password, firstName, lastName, email, status, avatar],
-  fieldSchemas: {
-    model: {},
-    validation: {},
-  },
-  populateFieldSchemas: function () {
-    this.all.forEach((field) => {
-      this.fieldSchemas.model = { ...this.fieldSchemas.model, ...field.getSchemaType() };
-      this.fieldSchemas.validation = { ...this.fieldSchemas.validation, ...field.getValidation() };
-    });
-  },
-};
+const userRegistrationValidationChain = [
+  username,
+  password,
+  confirmPassword,
+  firstName,
+  lastName,
+  email,
+  recoveryQuestion,
+  recoveryQuestionAnswer,
+].map((field) => field.getValidationChain());
 
-user.populateFieldSchemas();
-const userModelFieldSchemas = { ...user.fieldSchemas.model };
-const userValidationFieldSchemas = { ...user.fieldSchemas.validation };
-export { user, userModelFieldSchemas, userValidationFieldSchemas };
+export { userRegistrationValidationChain };

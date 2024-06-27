@@ -5,6 +5,7 @@ const appController = {
   getIndex: asyncHandler(async (req, res, next) => {
     res.render('index', {
       title: 'ChatExpress',
+      user: req.user,
       chatbox: getHbsChatboxContext(),
     });
   }),

@@ -12,7 +12,7 @@ passport.use(
       if (!match) return done(null, false, { message: 'Incorrect password' });
       return done(null, user);
     } catch (err) {
-      done(err);
+      return done(err);
     }
   })
 );
@@ -22,9 +22,9 @@ passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id).exec();
-    done(null, user);
+    return done(null, user);
   } catch (err) {
-    done(err);
+    return done(err);
   }
 });
 

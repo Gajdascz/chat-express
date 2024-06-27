@@ -1,5 +1,5 @@
 <section class="login-page">
-  <form method='POST' action="/login" class="card">
+  <form method='POST' action="/user/login" class="card">
     <h1 class="card-header">Login</h1>
     {{>field placeholder='Username' type='text' id='username' required=true label='Username' hideLabel=true}}
     {{>field placeholder='Password' type='password' id='password' required=true label='Password' hideLabel=true}} 
@@ -7,4 +7,5 @@
     <button class="primary">Log in</button>
     <p> Don't have an account? <a href="/register">Register Here</a> </p>
   </form>
+  <script src="../scripts/formHandler/index.js" type="module"></script>
 </section>

@@ -1,11 +1,14 @@
-export default (form, errors) => {
-  const formInputs = [...form.querySelectorAll('input, textarea, select')];
+export default (formInputs, errors) => {
   formInputs.forEach((input) => {
     input.dataset.status = 'valid';
     input.nextElementSibling.textContent = '';
   });
+  const inputsMap = formInputs.reduce((acc, curr) => {
+    acc[curr.name] = curr;
+    return acc;
+  }, {});
   errors.forEach((err) => {
-    const input = form.querySelector(`[name=${err.path}]`);
+    const input = inputsMap[err.path];
     if (!input) throw new Error(`Selector: ${err.path} did not find a valid element.`);
     input.dataset.status = 'invalid';
     const errMsg = document.createElement('p');
