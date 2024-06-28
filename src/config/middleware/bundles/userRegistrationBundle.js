@@ -1,9 +1,9 @@
 import asyncHandler from 'express-async-handler';
-import upload from './imports/multer.js';
+import upload from '../core/multer.js';
 
 import User from '../../../models/User.js';
-import processValidationResult from './validation/core/processValidationResult.js';
-import { userRegistrationValidationChain } from './validation/index.js';
+import processValidationResult from '../validation/core/processValidationResult.js';
+import { userRegistrationValidationChain } from '../validation/chains.js';
 
 const registerUser = [
   // Multer parses submitted form data and uses memory storage

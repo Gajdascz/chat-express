@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { capitalize } from '../../../../../utils/helpers.js';
+import { capitalize } from '../../../../utils/helpers.js';
 
 const isUnique = (chain, field, modelReference) => {
   let queryStr = null;

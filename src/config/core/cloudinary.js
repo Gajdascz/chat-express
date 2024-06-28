@@ -10,28 +10,25 @@ cloudinary.config({
 const avatar = {
   transforms: {
     original: [],
-    thumb: [{ width: 64, height: 64, aspect_ratio: 1.0, crop: 'fill' }, { radius: 'max' }, { fetch_format: 'auto' }],
-    profile: [
-      { width: 250, height: 250, aspect_ratio: 1.0, crop: 'fill' },
-      { radius: 'max' },
-      { fetch_format: 'auto' },
-    ],
+    thumb: [{ width: 40, height: 40, aspect_ratio: 1.0, crop: 'thumb' }, { radius: 'max' }, { fetch_format: 'auto' }],
+    profile: [{ width: 125, height: 125, aspect_ratio: 1.0 }, { radius: 'max' }, { fetch_format: 'auto' }],
   },
   getDefault: () => ({
-    thumb: 'https://res.cloudinary.com/dpya8ss9n/image/upload/v1719341638/members_only/_default/thumb.png',
-    profile: 'https://res.cloudinary.com/dpya8ss9n/image/upload/v1719341921/members_only/_default/profile.png',
+    thumb: 'https://res.cloudinary.com/dpya8ss9n/image/upload/v1719523549/members_only/_default/thumb.png',
+    profile: 'https://res.cloudinary.com/dpya8ss9n/image/upload/v1719523609/members_only/_default/profile.png',
   }),
   upload: async function (userId, filePath) {
     if (!filePath) return avatar.getDefault();
     try {
       const results = await Promise.all(
-        ['original', 'thumb', 'profile'].forEach((publicId) =>
+        ['original', 'thumb', 'profile'].map((publicId) =>
           cloudinary.uploader.upload(filePath, {
             resource_type: 'image',
             folder: `members_only/${userId}`,
             public_id: publicId,
             transformation: avatar.transforms[publicId],
             overwrite: true,
+            invalidate: true,
           })
         )
       );

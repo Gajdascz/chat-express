@@ -1,0 +1,14 @@
+<section class='user-profile-page'>
+  {{#with currentUser}}
+    <div class='card row-card'>
+      <img src='{{avatar.profile}}' class='avatar-profile' />
+      <div class='profile-info-text-wrapper'>
+        <h1 class='card-header'>{{username}}</h1>
+        <h4><span>Status:</span> {{status}}</h4>
+        {{#isNotEmptyStr fullName}}
+          <h4>{{fullName}}</h4>
+        {{/isNotEmptyStr}}
+      </div>
+    </div>
+  {{/with}}
+</section>

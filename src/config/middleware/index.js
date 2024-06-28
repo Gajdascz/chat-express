@@ -1,7 +1,7 @@
 // Middleware
-import errorHandler from './libs/errorBundle.js';
-import baseMiddleware from './libs/baseBundle.js';
-import registerUser from './libs/userRegistrationBundle.js';
+import errorHandler from './bundles/errorBundle.js';
+import baseMiddleware from './bundles/baseBundle.js';
+import registerUser from './bundles/userRegistrationBundle.js';
 
 // prettier-ignore
 export {

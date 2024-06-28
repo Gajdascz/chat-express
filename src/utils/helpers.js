@@ -3,7 +3,6 @@ import path from 'node:path';
 import createDebug from 'debug';
 import { DateTime } from 'luxon';
 
-// Server
 const getDebug = (namespace) => createDebug(`members-only:${namespace}`);
 const getSubDirectories = async (baseDir, includeBase = false) => {
   try {
@@ -18,18 +17,12 @@ const getSubDirectories = async (baseDir, includeBase = false) => {
   }
 };
 
-// Common
 const capitalize = (str) => `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
 const formatTimestamp = (isoTimeStamp) => DateTime.fromISO(isoTimeStamp).toLocaleString(DateTime.DATETIME_SHORT);
 const camelCase = (str) =>
   str.toLowerCase().replace(/([-_][a-z])/g, (group) => group.toUpperCase().replace('-', '').replace('_', ''));
+
 // hbs
-const handlebarsHelpers = {
-  capitalize,
-  formatTimestamp,
-  default: (provided, fallback) => provided ?? fallback,
-  camelCase,
-};
 const getHbsChatboxContext = (overrides) => ({
   id: 'chatbox-textarea',
   name: 'chatbox-textarea',
@@ -40,4 +33,4 @@ const getHbsChatboxContext = (overrides) => ({
   rightButton: { text: 'Send' },
 });
 
-export { getDebug, getSubDirectories, capitalize, formatTimestamp, handlebarsHelpers, getHbsChatboxContext, camelCase };
+export { getDebug, getSubDirectories, capitalize, formatTimestamp, getHbsChatboxContext, camelCase };

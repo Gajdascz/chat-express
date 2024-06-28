@@ -2,7 +2,7 @@
 import { create as createHbs } from 'express-handlebars';
 
 // Utils
-import { getSubDirectories, handlebarsHelpers } from '../../utils/helpers.js';
+import { getSubDirectories, capitalize, formatTimestamp, camelCase } from '../../utils/helpers.js';
 import { P_VIEWS } from '../../utils/constants.js';
 const { LAYOUTS, PARTIALS, MAIN } = P_VIEWS;
 
@@ -11,7 +11,21 @@ const hbs = createHbs({
   layoutsDir: LAYOUTS,
   partialsDir: await getSubDirectories(PARTIALS, true),
   extname: 'hbs',
-  helpers: handlebarsHelpers,
+  helpers: {
+    capitalize,
+    formatTimestamp,
+    default: (provided, fallback) => provided ?? fallback,
+    camelCase,
+    getAvatarThumb: (imgSrc) => `<img src="${imgSrc}" class="avatar-thumb">`,
+    getLogout: () =>
+      `<form method='POST' action='/user/logout' class='post-button-form'><button class='logout-button'>Logout</button></form>`,
+    getDropdownAnchor: (link) => `<a href="${link.href}">${link.text}</a>`,
+    getNavOptions: (url) => [
+      hbs.helpers.getDropdownAnchor({ href: `${url}`, text: 'Profile' }),
+      hbs.helpers.getLogout(),
+    ],
+    isNotEmptyStr: (str) => !(str.trim().length === 0),
+  },
 });
 
 export default (app) => {

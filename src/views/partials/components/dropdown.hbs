@@ -1,0 +1,23 @@
+<div class='dropdown-container'>
+  <button
+    id='{{default idPrefix ""}}dropdown-toggle'
+    aria-expanded='false'
+    aria-haspopup='true'
+    aria-controls='{{default idPrefix ""}}dropdown-list'
+    class='dropdown-toggle-button'
+  >
+    {{{toggleButtonContent}}}
+  </button>
+  <div
+    class='dropdown-content-container'
+    id='{{default idPrefix ""}}dropdown-list'
+    tabindex='-1'
+    role='menu'
+    aria-labelledby='{{default idPrefix ""}}dropdown-toggle'
+  >
+    {{#each options}}
+      {{{this}}}
+    {{/each}}
+  </div>
+  <script type='module' src='../../../scripts/dropdown.js'></script>
+</div>

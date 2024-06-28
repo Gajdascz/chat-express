@@ -22,17 +22,18 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
+// Virtuals
 UserSchema.virtual('fullName').get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
-
 UserSchema.virtual('url').get(function () {
-  return `/user/${this.id}`;
+  return `/user/${this.username}`;
 });
 
+// Methods
 UserSchema.methods.setAvatar = async function (filePath = null) {
   try {
-    const { profile, thumb } = await uploadAvatar(this.id, filePath);
+    const { thumb, profile } = await uploadAvatar(this.id, filePath);
     this.avatar.thumb = thumb;
     this.avatar.profile = profile;
     return true;
@@ -68,4 +69,9 @@ UserSchema.methods.validateRecovery = async function (answer) {
   const match = await bcrypt.compare(answer, this.recovery.hash);
   return !!match;
 };
+
+// Model Options
+UserSchema.set('toObject', { virtuals: true });
+UserSchema.set('toJSON', { virtuals: true });
+
 export default mongoose.model('User', UserSchema);

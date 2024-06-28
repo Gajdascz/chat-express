@@ -3,16 +3,12 @@
     <a href='/' class='nav-header-link'>ChatExpress</a>
   </h1>
   <div class='nav-menu'>
-    {{#if (user)}}
-      <div class='nav-profile-container'>
-        <!-- cloudinary avatar -->
-        <div class='nav-profile-options-wrapper'>
-          <a href='/user/{{userId}}'>Profile</a>
-          <form method='POST' action='/user/logout/{{userId}}'>
-            <button class=''>Logout</button>
-          </form>
-        </div>
-      </div>
+    {{#if currentUser}}
+    {{> dropdown 
+      idPrefix='nav-' 
+      toggleButtonContent=(getAvatarThumb currentUser.avatar.thumb)
+      options=(getNavOptions currentUser.url)
+    }}
     {{else}}
       <div class='nav-action-links-wrapper'>
         <a class='nav-link' href='/user/register'>Register</a>
@@ -21,3 +17,14 @@
     {{/if}}
   </div>
 </nav>
+
+
+
+
+{{!-- 
+      options=
+      
+        <a href={{currentUser.url}}>Profile</a> 
+        <form method='POST' action='/user/logout'> 
+          <button class=''>Logout</button> 
+       </form>  --}}

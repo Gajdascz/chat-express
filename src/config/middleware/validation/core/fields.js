@@ -12,7 +12,7 @@ import {
   isUnique,
   optional,
 } from './rules.js';
-import { RECOVERY_QUESTIONS } from '../../../../../utils/constants.js';
+import { RECOVERY_QUESTIONS } from '../../../../utils/constants.js';
 import { body } from 'express-validator';
 const buildChain = (field, config) => config.reduce((chain, validator) => validator(chain), body(field).trim());
 

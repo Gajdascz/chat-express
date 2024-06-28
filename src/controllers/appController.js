@@ -3,9 +3,9 @@ import { getHbsChatboxContext } from '../utils/helpers.js';
 
 const appController = {
   getIndex: asyncHandler(async (req, res, next) => {
+    // console.log(req.user.avatar);
     res.render('index', {
       title: 'ChatExpress',
-      user: req.user,
       chatbox: getHbsChatboxContext(),
     });
   }),

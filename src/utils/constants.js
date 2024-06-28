@@ -29,6 +29,14 @@ const RECOVERY_QUESTIONS = [
 ];
 
 const AVATAR_PUBLIC_IDS = ['original', 'thumb', 'profile'];
+
+const ROUTES = {
+  HOME: '/',
+  USER: '/user',
+  LOGOUT: '/user/logout',
+  LOGIN: '/user/login',
+  REGISTER: '/user/register',
+};
 export {
   SUCCESS,
   FAIL,
@@ -41,4 +49,5 @@ export {
   FORM_SUBMITTER_CLIENT_SCRIPT,
   RECOVERY_QUESTIONS,
   AVATAR_PUBLIC_IDS,
+  ROUTES,
 };
