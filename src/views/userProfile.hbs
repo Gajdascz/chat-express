@@ -5,9 +5,9 @@
       <div class='profile-info-text-wrapper'>
         <h1 class='card-header'>{{username}}</h1>
         <h4><span>Status:</span> {{status}}</h4>
-        {{#isNotEmptyStr fullName}}
+        {{#if fullName}}
           <h4>{{fullName}}</h4>
-        {{/isNotEmptyStr}}
+        {{/if}}
       </div>
     </div>
   {{/with}}

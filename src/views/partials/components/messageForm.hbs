@@ -1,0 +1,25 @@
+<form method='POST' action='{{action}}' id='{{formId}}'>
+  <label for='{{formId}}-title-input' style='display:none;'>Message Title</label>
+  <label for='{{formId}}-body-input' style='display:none;'>Message Body</label>
+  <input type='hidden' name='messageContext' value='{{camelCase formId}}' />
+  <div class='message-input-wrapper'>
+    <input
+      type='text'
+      id='{{formId}}-title-input'
+      name='{{camelCase formId}}Title'
+      placeholder='Message Title'
+      class='message-title-input'
+      required
+    />
+    <textarea
+      name='{{camelCase formId}}Body'
+      id='{{formId}}-body-input'
+      placeholder='Message Body'
+      class='message-body-input'
+      required
+    ></textarea>
+    <div class='message-form-actions-bar'>
+      <button type='submit' class='primary message-send-button'>Send</button>
+    </div>
+  </div>
+</form>

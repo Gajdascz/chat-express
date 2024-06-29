@@ -75,15 +75,18 @@ nav {
   background-color: var(--color-background);
   transform-origin: top right;
   transform: scale(0) rotate(90deg);
-  transition: transform 0.5s linear;
+  transition: transform 0.25s ease-in;
 }
 .dropdown-container.open > button.dropdown-toggle-button {
+  box-shadow: var(--interactive-glow);
+}
+.dropdown-container > button.dropdown-toggle-button:hover {
   box-shadow: var(--interactive-glow);
 }
 .dropdown-container.open .dropdown-content-container {
   visibility: visible;
   transform: scale(1) rotate(0deg);
-  transition: transform 0.5s linear;
+  transition: transform 0.25s ease-out;
 }
 .dropdown-container > .dropdown-content-container > form.dropdown-option {
   padding: 0;
@@ -131,6 +134,14 @@ button:has(img.avatar-thumb) {
   border: 2px solid var(--color-primary);
   border-radius: 50%;
 }
+
+label[for='avatar-upload'] {
+}
+
+label[for='avatar-upload'] > input[type='file'] {
+  display: none;
+}
+
 main {
   max-width: 100vw;
   width: 100%;
@@ -237,28 +248,46 @@ select,
   padding: 1em;
   box-shadow: var(--shadow-medium);
   border-radius: 20px;
+  width: 75%;
 }
 
-.chatbox-message-input-wrapper {
+.message-input-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   border: 2px solid var(--color-primary);
   border-radius: 10px;
   overflow: hidden;
   flex: 1;
-  width: 100%;
 }
-.chatbox-message-input-wrapper > input,
-.chatbox-message-input-wrapper > textarea {
+.message-input-wrapper > input,
+.message-input-wrapper > textarea {
   flex: 1;
   padding: 0.5em;
   font-size: 1.25rem;
   border: none;
   resize: none;
+  cursor: text;
 }
-.chatbox-message-input-wrapper > button {
-  border-radius: 0;
-  flex: 0;
+.message-form-actions-bar {
+  display: flex;
+  background-color: white;
+  justify-content: flex-end;
+}
+.message-form-actions-bar > button.message-send-button {
+  border-radius: 20px 0 0 0;
+  border-left: 2px solid var(--color-primary);
+  border-top: 2px solid var(--color-primary);
+  width: fit-content;
+  padding: 1em 3em;
+  position: relative;
+}
+input.message-title-input {
+  border-bottom: 2px solid var(--color-primary);
+}
+textarea.message-body-input {
+  flex: 1;
+  min-height: 100px;
 }
 /*#endregion chatbox*/
 
@@ -273,9 +302,7 @@ select,
 }
 
 /*#region User Profile Page */
-.card.row-card {
-  flex-direction: row;
-}
+
 .profile-info-text-wrapper {
   display: flex;
   flex-direction: column;
@@ -292,6 +319,9 @@ select,
   border-radius: 10%;
   width: fit-content;
   box-shadow: var(--shadow-medium);
+}
+.card.row-card {
+  flex-direction: row;
 }
 .card-header {
   font-size: 2.5rem;

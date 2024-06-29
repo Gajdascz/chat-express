@@ -1,14 +1,10 @@
 <section class='chatbox-container'>
   <div class='message-history-container'>
-    <!-- iterate over messages and populate -->
+    {{#each messages}}
+      {{>message}}
+    {{/each}}
     {{> message }}
   </div>
 
-  <form method='POST' action='' id="">
-    <label for='chatbox-message' {{#if hideLabel}}style='display:none;'{{/if}}>{{label}}</label>
-    <div class="chatbox-message-input-wrapper">
-      <textarea name='chatbox-message' id='chatbox-message' placeholder='Enter your message here' required></textarea>
-      <button type='submit' class='primary'>Send</button>
-    </div>
-  </form>
+{{>messageForm formId='global-chat' action='/message/global'}}
 </section>

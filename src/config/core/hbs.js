@@ -24,7 +24,6 @@ const hbs = createHbs({
       hbs.helpers.getDropdownAnchor({ href: `${url}`, text: 'Profile' }),
       hbs.helpers.getLogout(),
     ],
-    isNotEmptyStr: (str) => !(str.trim().length === 0),
   },
 });
 

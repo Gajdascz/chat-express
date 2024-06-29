@@ -14,6 +14,7 @@ import { getDebug } from './utils/helpers.js';
 
 import appController from './controllers/appController.js';
 import userRouter from './routers/userRouter.js';
+import messageRouter from './routers/messageRouter.js';
 
 // 1. Init debugger for this file
 const debug = getDebug('config-index');
@@ -33,6 +34,7 @@ app.use(baseMiddleware);
 // 6. Set Base Routes
 app.get('/', appController.getIndex);
 app.use('/user', userRouter);
+app.use('/message', messageRouter);
 app.get('/error', (req, res) =>
   res.render('error', { error: { msg: req.query.msg, status: req.query.status, stack: req.query.stack } })
 );

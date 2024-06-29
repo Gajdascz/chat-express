@@ -24,6 +24,7 @@ const UserSchema = new Schema(
 
 // Virtuals
 UserSchema.virtual('fullName').get(function () {
+  if (!this.firstName || !this.lastName) return '';
   return `${this.firstName} ${this.lastName}`;
 });
 UserSchema.virtual('url').get(function () {
@@ -71,7 +72,7 @@ UserSchema.methods.validateRecovery = async function (answer) {
 };
 
 // Model Options
-UserSchema.set('toObject', { virtuals: true });
-UserSchema.set('toJSON', { virtuals: true });
+UserSchema.set('toObject', { virtuals: true, methods: true });
+UserSchema.set('toJSON', { virtuals: true, methods: true });
 
 export default mongoose.model('User', UserSchema);

@@ -19,9 +19,12 @@ const userController = {
   getUser: [
     isLoggedIn,
     asyncHandler(async (req, res, next) => {
+      console.log(res.locals.currentUser);
       res.render('userProfile');
     }),
   ],
+  getSettings: [],
+  postSettings: [],
   postLogout: (req, res, next) => req.logout((err) => (err ? next(err) : res.redirect('/'))),
 };
 
