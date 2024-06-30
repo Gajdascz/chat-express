@@ -1,14 +1,13 @@
 <div class='message-wrapper'>
+  {{#with message }}
   <span class='message-header'>
     <span>{{avatar}}</span>
-    <span>{{author}}</sp>
+    <span>{{title}}</span>
+    <span>{{username}}</sp>
     <span>{{timeSent}}</span>
   </div>
   <div class="message-body">
-    {{message}}
+    {{body}}
   </div>
-  <div class="message-actions-container">
-    <button>Like</button>
-    <button>dislike</button>
-  </div>
+  {{/with}}
 </div>

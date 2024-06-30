@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { RECOVERY_QUESTIONS, USER_STATUSES } from '../utils/constants.js';
 import bcrypt from 'bcrypt';
 import { uploadAvatar } from '../config/core/cloudinary.js';
-
+import { persistMethods } from '../utils/helpers.js';
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
@@ -53,8 +53,13 @@ UserSchema.methods.setPassword = async function (password) {
   }
 };
 UserSchema.methods.validatePassword = async function (password) {
-  const match = await bcrypt.compare(password, this.password);
-  return !!match;
+  try {
+    const match = await bcrypt.compare(password, this.password);
+    return !!match;
+  } catch (err) {
+    console.error(`Failed to process password validation: ${err}`);
+    return false;
+  }
 };
 UserSchema.methods.setRecovery = async function (question, answer) {
   try {
@@ -67,12 +72,21 @@ UserSchema.methods.setRecovery = async function (question, answer) {
   }
 };
 UserSchema.methods.validateRecovery = async function (answer) {
-  const match = await bcrypt.compare(answer, this.recovery.hash);
-  return !!match;
+  try {
+    const match = await bcrypt.compare(answer, this.recovery.hash);
+    return !!match;
+  } catch (err) {
+    console.error(`Failed to process recovery validation: ${err}`);
+    return false;
+  }
 };
 
 // Model Options
-UserSchema.set('toObject', { virtuals: true, methods: true });
-UserSchema.set('toJSON', { virtuals: true, methods: true });
+const transform = (document, returnObj) => {
+  delete returnObj.password;
+  return persistMethods(UserSchema, document, returnObj);
+};
+UserSchema.set('toObject', { virtuals: true, methods: true, transform });
+UserSchema.set('toJSON', { virtuals: true, methods: true, transform });
 
 export default mongoose.model('User', UserSchema);

@@ -23,8 +23,6 @@ const userController = {
       res.render('userProfile');
     }),
   ],
-  getSettings: [],
-  postSettings: [],
   postLogout: (req, res, next) => req.logout((err) => (err ? next(err) : res.redirect('/'))),
 };
 

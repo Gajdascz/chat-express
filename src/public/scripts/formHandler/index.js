@@ -7,9 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formInputs = [...form.querySelectorAll('input, textarea, select')];
     formInputs.forEach((input) => {
       input.nextElementSibling.textContent = '';
-      input.addEventListener('change', () => {
-        input.dataset.status = 'pending';
-      });
+      input.addEventListener('change', () => (input.dataset.status = 'pending'));
     });
   } else console.warn(`formHandler script imported on page with no form`);
 });

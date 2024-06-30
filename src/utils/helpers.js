@@ -16,21 +16,17 @@ const getSubDirectories = async (baseDir, includeBase = false) => {
     console.err(err);
   }
 };
-
+const persistMethods = (Schema, document, returnObj) => {
+  const methods = Object.keys(Schema.methods).reduce((acc, curr) => {
+    acc[curr] = document[curr].bind(document);
+    return acc;
+  }, returnObj);
+  if (methods.initializeTimestamps) delete methods.initializeTimestamps;
+  return methods;
+};
 const capitalize = (str) => `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
-const formatTimestamp = (isoTimeStamp) => DateTime.fromISO(isoTimeStamp).toLocaleString(DateTime.DATETIME_SHORT);
+const formatTimestamp = (jsDate) => DateTime.fromJSDate(jsDate).toLocaleString(DateTime.DATETIME_SHORT);
 const camelCase = (str) =>
   str.toLowerCase().replace(/([-_][a-z])/g, (group) => group.toUpperCase().replace('-', '').replace('_', ''));
 
-// hbs
-const getHbsChatboxContext = (overrides) => ({
-  id: 'chatbox-textarea',
-  name: 'chatbox-textarea',
-  textarea: true,
-  placeholder: 'Enter your message here',
-  label: 'Message',
-  hideLabel: true,
-  rightButton: { text: 'Send' },
-});
-
-export { getDebug, getSubDirectories, capitalize, formatTimestamp, getHbsChatboxContext, camelCase };
+export { getDebug, getSubDirectories, capitalize, formatTimestamp, camelCase, persistMethods };
