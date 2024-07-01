@@ -108,7 +108,7 @@ const email = {
   },
 };
 const userUpgradeAnswer = {
-  field: 'email',
+  field: 'userUpgradeAnswer',
   getValidationChain: function () {
     return buildChain(this.field, [
       (chain) =>

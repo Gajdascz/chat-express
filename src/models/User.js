@@ -23,7 +23,6 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-// Virtuals
 UserSchema.virtual('fullName').get(function () {
   if (!this.firstName || !this.lastName) return '';
   return `${this.firstName} ${this.lastName}`;
@@ -37,7 +36,6 @@ UserSchema.virtual('timeUntilNextAvatarUpdate').get(function () {
   return remainingTime > 0 ? remainingTime : 0;
 });
 
-// Methods
 UserSchema.methods.setAvatar = async function (upload = null, setLastUpdated = true) {
   if (this.avatar.lastUpdated === 0 || this.avatarUpdateTime >= 0) {
     const { thumb, profile } = await uploadAvatar(this.id, upload);
@@ -67,7 +65,6 @@ UserSchema.methods.validatePassword = async function (password) {
   }
 };
 
-// Model Options
 const transform = (document, returnObj) => {
   delete returnObj.password;
   return persistMethods(UserSchema, document, returnObj);

@@ -13,7 +13,7 @@ export default [
   compression,            // Compresses responses to save bandwidth
   helmet,                 // Adds security headers requests
   logger,                 // Logs incoming requests
-  rateLimit,              // Limits repeated requests to public APIs and endpoints
+//  rateLimit,              // Limits repeated requests to public APIs and endpoints
   session,                // Sets the express-session configuration
   ...expressMiddleware,   // Parses JSON and URL-encoded data, serves static files
   cookieParser,           // Parses cookies attached to the client request

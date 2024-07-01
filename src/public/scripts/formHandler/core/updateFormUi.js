@@ -1,7 +1,9 @@
 export default (formInputs, errors) => {
   formInputs.forEach((input) => {
     input.dataset.status = 'valid';
-    input.nextElementSibling.textContent = '';
+    const errContainer = input.nextElementSibling;
+    if (errContainer && errContainer.classList.contains('error-container')) errContainer.textContent = '';
+    errContainer.textContent = '';
   });
   const inputsMap = formInputs.reduce((acc, curr) => {
     acc[curr.name] = curr;

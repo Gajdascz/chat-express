@@ -2,7 +2,6 @@
   --color-prussian-blue: #023047;
   --color-selective-yellow: #ffb703;
   --color-pacific-cyan: #26a3c2;
-  --color-sky-blue: #8ecae6;
   --color-ut-orange: #fb8500;
   --color-off-white: #f7f7f7;
 
@@ -13,7 +12,6 @@
   --color-primary: var(--color-prussian-blue);
   --color-secondary: var(--color-pacific-cyan);
   --color-accent: var(--color-selective-yellow);
-  --color-tertiary: var(--color-sky-blue);
   --color-interactive: var(--color-ut-orange);
 
   --color-disabled-overlay: rgba(255, 255, 255, 0.55);
@@ -28,6 +26,7 @@
   --interactive-glow: 0 0 10px var(--color-interactive);
 }
 
+/*#region General */
 body {
   background-color: var(--color-background);
   color: var(--color-text);
@@ -35,6 +34,58 @@ body {
   display: grid;
   grid-template-rows: min-content 1fr min-content;
 }
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.avatar-thumb {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+}
+.avatar-profile {
+  width: 125px;
+  height: 125px;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+}
+
+hr {
+  height: 0;
+  border: 1px solid var(--color-primary);
+  border-radius: 20px;
+  box-shadow: var(--shadow-light);
+  width: 100%;
+  align-self: center;
+  background-color: var(--color-primary);
+  margin: 0;
+}
+main {
+  max-width: 100vw;
+  max-height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1em;
+  text-overflow: ellipsis;
+  display: flex;
+}
+.error-container *,
+.error-message {
+  color: var(--color-error);
+  font-style: italic;
+}
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25em;
+  font-weight: bold;
+  font-size: 1.15rem;
+}
+/*#endregion General */
+
 /*#region Nav */
 nav {
   display: flex;
@@ -85,7 +136,6 @@ nav > div.full-nav-container {
   flex-direction: column;
   align-items: center;
 }
-
 .dropdown-content-container {
   position: absolute;
   display: flex;
@@ -118,7 +168,6 @@ nav > div.full-nav-container {
   padding: 0;
   margin: 0;
 }
-
 .dropdown-container > .dropdown-content-container > .dropdown-option,
 .dropdown-container > .dropdown-content-container > .dropdown-option > * {
   padding: 1em 2.5em;
@@ -141,47 +190,7 @@ nav > div.full-nav-container {
 }
 /*#endregion dropdown */
 
-button:has(img.avatar-thumb) {
-  background-color: transparent;
-  width: fit-content;
-  height: fit-content;
-  border: none;
-  padding: 0;
-  border-radius: 50%;
-}
-.avatar-thumb {
-  width: 40px;
-  height: 40px;
-  border: 2px solid var(--color-primary);
-  border-radius: 50%;
-}
-.avatar-profile {
-  width: 125px;
-  height: 125px;
-  border: 2px solid var(--color-primary);
-  border-radius: 50%;
-}
-
-hr {
-  height: 0;
-  border: 1px solid var(--color-primary);
-  border-radius: 20px;
-  box-shadow: var(--shadow-light);
-  width: 100%;
-  align-self: center;
-  background-color: var(--color-primary);
-  margin: 0;
-}
-main {
-  max-width: 100vw;
-  max-height: 100%;
-  width: 100%;
-  margin: 0 auto;
-  padding: 1em;
-  text-overflow: ellipsis;
-  display: flex;
-}
-
+/*#region General Interactive*/
 a {
   text-decoration: none;
   color: var(--color-prussian-blue);
@@ -205,18 +214,20 @@ button.primary {
   padding: 1em;
   box-shadow: var(--shadow-light);
 }
-
 button.primary:hover {
   background-color: var(--color-accent);
   color: var(--color-primary);
   box-shadow: var(--shadow-dark);
 }
-
-.error-container *,
-.error-message {
-  color: var(--color-error);
-  font-style: italic;
+button:has(img.avatar-thumb) {
+  background-color: transparent;
+  width: fit-content;
+  height: fit-content;
+  border: none;
+  padding: 0;
+  border-radius: 50%;
 }
+/*#endregion General Interactive*/
 
 /*#region field-container */
 .field-container {
@@ -232,12 +243,12 @@ select,
   border-color: var(--color-primary);
   border: 2px solid var(--color-primary);
   cursor: text;
+  width: 100%;
 }
 .field-container > input[type='file'] {
   overflow: hidden;
-  word-wrap: break-word;
   text-overflow: ellipsis;
-  max-width: 400px;
+  width: 100%;
   cursor: default;
 }
 .field-container > label {
@@ -262,6 +273,7 @@ select,
   display: flex;
   flex-direction: column;
 }
+
 .paired-fields {
   display: flex;
   flex-wrap: wrap;
@@ -271,6 +283,7 @@ select,
 }
 .paired-fields > * {
   flex: 1;
+  min-width: 150px;
 }
 /*#endregion*/
 
@@ -365,6 +378,9 @@ textarea.message-body-input:focus {
   border-left: 5px solid var(--color-primary);
 }
 
+/*#endregion chatbox*/
+
+/*#region Disabled Messaging Overlay */
 .disabled-messaging-overlay {
   position: relative;
   background-color: var(--color-disabled-overlay);
@@ -390,8 +406,9 @@ textarea.message-body-input:focus {
   justify-content: center;
   flex-wrap: wrap;
 }
-/*#endregion chatbox*/
+/*#endregion Disabled Messaging Overlay*/
 
+/*#region Pages and Forms */
 .register-page,
 .login-page {
   display: flex;
@@ -401,25 +418,23 @@ textarea.message-body-input:focus {
   height: 100%;
   width: 100%;
 }
-.user-profile-page {
+form#user-upgrade-form {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 0.5em;
+  max-width: min-content;
 }
-
-/*#region User Profile Page */
-
-.profile-info-text-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
+form#user-upgrade-form h5 {
+  font-style: italic;
 }
+/*#endregion Pages and Forms */
 
-/*#endregion User Profile Page */
-
+/*#region Card */
 .card {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1em;
   padding: 2em;
   border-radius: 10%;
@@ -438,8 +453,9 @@ textarea.message-body-input:focus {
   align-items: center;
   font-size: 1.25rem;
 }
-/*#region Message */
+/*#endregion Card*/
 
+/*#region Message */
 .message-wrapper {
   display: flex;
   flex-direction: column;
@@ -524,36 +540,6 @@ textarea.message-body-input:focus {
   flex: 1;
 }
 /*#endregion Message*/
-
-.field-button-wrapper {
-  display: flex;
-  border: 2px solid var(--color-primary);
-  width: min-content;
-  border-radius: 20px;
-  overflow: hidden;
-}
-.field-button-wrapper > button,
-.field-button-wrapper * > input {
-  border: none;
-  border-radius: 0;
-  padding: 0.5em;
-}
-
-form#user-upgrade-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  max-width: min-content;
-}
-form#user-upgrade-form h5 {
-  font-style: italic;
-}
-
-form#update-avatar-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
 
 @media (max-width: 476px) {
   nav > div.full-nav-container {
