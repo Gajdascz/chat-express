@@ -55,8 +55,7 @@ UserSchema.methods.setPassword = async function (password) {
     this.password = await bcrypt.hash(password, 10);
     return true;
   } catch (err) {
-    console.error(`UserSchema setPassword: ${err}`);
-    return false;
+    throw new Error(`UserSchema setPassword: ${err}`);
   }
 };
 UserSchema.methods.validatePassword = async function (password) {
@@ -64,8 +63,7 @@ UserSchema.methods.validatePassword = async function (password) {
     const match = await bcrypt.compare(password, this.password);
     return !!match;
   } catch (err) {
-    console.error(`Failed to process password validation: ${err}`);
-    return false;
+    throw new Error(`Failed to process password validation: ${err}`);
   }
 };
 

@@ -1,3 +1,5 @@
+import handleFormSubmission from './formHandler/core/handleFormSubmission.js';
+
 const statusMap = {
   undefined: 0,
   basic: 1,
@@ -32,24 +34,16 @@ const createAvatar = (url, className) => {
   return img;
 };
 
-const handleDelete = async (e) => {
-  const form = e.target;
-  try {
-    const response = await fetch(form.action, { method: 'POST' });
-    const json = await response.json();
-    if (json.alertMsg) alert(json.alertMsg);
-    if (json.redirect) location.replace(response.redirect);
-  } catch (err) {
-    console.error(err);
-  }
-};
-
 const createDeleteMessageForm = (_id) => {
   const form = createElement('form', 'delete-message-form');
   form.action = `/message/${_id}/delete`;
   form.method = 'POST';
   form.append(createElement('button', 'delete-message-button', 'X'));
-  form.dataset.handle = 'true';
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleFormSubmission(e);
+  });
   return form;
 };
 

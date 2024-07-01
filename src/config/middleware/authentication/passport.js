@@ -1,6 +1,5 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import bcrypt from 'bcrypt';
 import User from '../../../models/User.js';
 
 passport.use(
@@ -8,7 +7,7 @@ passport.use(
     try {
       const user = await User.findOne({ username }).exec();
       if (!user) return done(null, false, { message: 'Username not registered' });
-      const match = await bcrypt.compare(password, user.password);
+      const match = await user.validatePassword(password);
       if (!match) return done(null, false, { message: 'Incorrect password' });
       return done(null, user);
     } catch (err) {

@@ -1,30 +1,46 @@
 @startuml
 
+!define object << (O,LightSeaGreen) >>
 !define model << (M,LightSalmon) >>
-!define schema << (M,LightBlue) >>
+!define schema << (S,LightBlue) >>
+
 
 title Data Models
 
+class Avatar object {
+  thumb: String
+  profile: String
+  lastUpdated: Number
+}
+
 class User model {
+  +userName: String
   +firstName: String
   +lastName: String
-  +userName: String
+  +email: String
   +password: String
-  +status: Number
-  +avatar: Object
+  +status: String
+  +avatar: Avatar
+  +setAvatar(upload:String, setLastUpdated:Boolean): true|Error
+  +setPassword(password:String): true|Error
+  +validatePassword(passwordString): Boolean|Error
   == Virtual ==
   +fullName: String
   +url: String
+  +timeUntilNextAvatarUpdate: Number
 }
 
 class Message model {
   +title: String
   +body: String
-  +author: User
-  == Virtual ==
-  +url: String
+  +context: String
+  +sender: User
+  +recipient: User
 }
 
-Message -- "1" User
+User "1" *-- "1" Avatar
+
+Message "1" --- "1" User : sender
+Message "1" --- "0..1" User : recipient
 
 @enduml
