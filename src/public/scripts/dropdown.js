@@ -7,21 +7,27 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const toggleDropdown = () => {
-      const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
-      toggleButton.setAttribute('aria-expanded', !isExpanded);
-      container.classList.toggle('open', !isExpanded);
+    const openDropdown = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleButton.setAttribute('aria-expanded', 'true');
+      container.classList.toggle('open', 'true');
+      document.addEventListener('keydown', closeDropdown);
+      document.addEventListener('click', closeDropdown);
+      toggleButton.removeEventListener('click', openDropdown);
     };
 
     const closeDropdown = (e) => {
-      if (e.key === 'Escape' && container.classList.contains('open')) {
+      if ((e.key === 'Escape' || e.type === 'click') && container.classList.contains('open')) {
         toggleButton.setAttribute('aria-expanded', 'false');
         container.classList.remove('open');
+        document.removeEventListener('keydown', closeDropdown);
+        document.removeEventListener('click', closeDropdown);
+        toggleButton.addEventListener('click', openDropdown);
       }
     };
 
-    toggleButton.addEventListener('click', toggleDropdown);
-    document.addEventListener('keydown', closeDropdown);
+    toggleButton.addEventListener('click', openDropdown);
 
     // Add 'dropdown-option' class to children of contentContainer
     [...contentContainer.children].forEach((child) => child.classList.add('dropdown-option'));

@@ -15,18 +15,18 @@ const P_VIEWS = {
 
 const USER_STATUSES = { BASIC: 'basic', MEMBER: 'member', ADMIN: 'admin' };
 
+const USER_STATUS_MAP = {
+  undefined: -999,
+  basic: 0,
+  member: 1,
+  admin: 999,
+};
 const MESSAGE_REACTIONS = {
   LIKE: 'like',
   DISLIKE: 'dislike',
 };
 
 const FORM_SUBMITTER_CLIENT_SCRIPT = '<script src="../scripts/formSubmitter.js" type="module" defer></script>';
-
-const RECOVERY_QUESTIONS = [
-  'What was your dream job growing up?',
-  'What is your favorite animal?',
-  'Who is your favorite musician?',
-];
 
 const AVATAR_PUBLIC_IDS = ['original', 'thumb', 'profile'];
 
@@ -45,9 +45,9 @@ export {
   P_PUBLIC,
   P_VIEWS,
   USER_STATUSES,
+  USER_STATUS_MAP,
   MESSAGE_REACTIONS,
   FORM_SUBMITTER_CLIENT_SCRIPT,
-  RECOVERY_QUESTIONS,
   AVATAR_PUBLIC_IDS,
   ROUTES,
 };

@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
-import { RECOVERY_QUESTIONS, USER_STATUSES } from '../utils/constants.js';
+import { USER_STATUSES } from '../utils/constants.js';
 import bcrypt from 'bcrypt';
 import { uploadAvatar } from '../config/core/cloudinary.js';
 import { persistMethods } from '../utils/helpers.js';
+
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
@@ -12,12 +13,12 @@ const UserSchema = new Schema(
     lastName: { type: String, maxLength: 50 },
     email: { type: String },
     password: { type: String, required: true },
-    recovery: {
-      question: { type: String, enum: RECOVERY_QUESTIONS, required: true },
-      hash: { type: String, required: true },
-    },
     status: { type: String, enum: USER_STATUSES, default: USER_STATUSES.BASIC },
-    avatar: { thumb: { type: String, default: null }, profile: { type: String, default: null } },
+    avatar: {
+      thumb: { type: String, default: null },
+      profile: { type: String, default: null },
+      lastUpdated: { type: Number, default: 0 },
+    },
   },
   { timestamps: true }
 );
@@ -30,18 +31,24 @@ UserSchema.virtual('fullName').get(function () {
 UserSchema.virtual('url').get(function () {
   return `/user/${this.username}`;
 });
+UserSchema.virtual('timeUntilNextAvatarUpdate').get(function () {
+  const timeElapsed = Date.now() - this.avatar.lastUpdated;
+  const remainingTime = 4.32e7 - timeElapsed;
+  return remainingTime > 0 ? remainingTime : 0;
+});
 
 // Methods
-UserSchema.methods.setAvatar = async function (filePath = null) {
-  try {
-    const { thumb, profile } = await uploadAvatar(this.id, filePath);
+UserSchema.methods.setAvatar = async function (upload = null, setLastUpdated = true) {
+  if (this.avatar.lastUpdated === 0 || this.avatarUpdateTime >= 0) {
+    const { thumb, profile } = await uploadAvatar(this.id, upload);
     this.avatar.thumb = thumb;
     this.avatar.profile = profile;
+    if (setLastUpdated) this.avatar.lastUpdated = Date.now();
     return true;
-  } catch (err) {
-    console.error(err);
-    return false;
-  }
+  } else
+    throw new Error(
+      `You can only update your avatar once every 12 hours. Try again in: ${Math.round((this.timeUntilNextAvatarUpdate / 1000 / 60 / 60) * 100) / 100} hours`
+    );
 };
 UserSchema.methods.setPassword = async function (password) {
   try {
@@ -58,25 +65,6 @@ UserSchema.methods.validatePassword = async function (password) {
     return !!match;
   } catch (err) {
     console.error(`Failed to process password validation: ${err}`);
-    return false;
-  }
-};
-UserSchema.methods.setRecovery = async function (question, answer) {
-  try {
-    this.recovery.question = question;
-    this.recovery.hash = await bcrypt.hash(answer, 10);
-    return true;
-  } catch (err) {
-    console.error(`UserSchema setRecovery: ${err}`);
-    return false;
-  }
-};
-UserSchema.methods.validateRecovery = async function (answer) {
-  try {
-    const match = await bcrypt.compare(answer, this.recovery.hash);
-    return !!match;
-  } catch (err) {
-    console.error(`Failed to process recovery validation: ${err}`);
     return false;
   }
 };

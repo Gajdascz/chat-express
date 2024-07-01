@@ -11,11 +11,8 @@ router.post('/logout/', userController.postLogout);
 router.get('/register', userController.getRegister);
 router.post('/register', userController.postRegister);
 
-router.get('/recover');
-router.post('/recover');
-router.get('/recover/:id');
-router.post('/recover/:id');
-
 router.get('/:username', userController.getUser);
+router.post('/:username/upgrade/basic-to-member', userController.postUpgradeToMember);
+router.post('/:username/update/avatar', userController.postAvatarUpdate);
 
 export default router;

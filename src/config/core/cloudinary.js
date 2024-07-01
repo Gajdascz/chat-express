@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
+import streamifier from 'streamifier';
 
 cloudinary.config({
   secure: true,
@@ -17,22 +18,41 @@ const avatar = {
     thumb: 'https://res.cloudinary.com/dpya8ss9n/image/upload/v1719523549/members_only/_default/thumb.png',
     profile: 'https://res.cloudinary.com/dpya8ss9n/image/upload/v1719523609/members_only/_default/profile.png',
   }),
-  upload: async function (userId, filePath) {
-    if (!filePath) return avatar.getDefault();
-    try {
-      const results = await Promise.all(
-        ['original', 'thumb', 'profile'].map((publicId) =>
-          cloudinary.uploader.upload(filePath, {
+  upload: async function (userId, buffer) {
+    if (!buffer) return avatar.getDefault();
+    const uploadToCloudinary = (buffer, publicId) => {
+      return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
             resource_type: 'image',
-            folder: `members_only/${userId}`,
+            folder: `members_only/_uploads/${userId}`,
             public_id: publicId,
             transformation: avatar.transforms[publicId],
             overwrite: true,
             invalidate: true,
-          })
-        )
+          },
+          (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result.secure_url);
+            }
+          }
+        );
+        streamifier.createReadStream(buffer).pipe(uploadStream);
+      });
+    };
+    try {
+      const resultsArr = await Promise.all(
+        ['original', 'thumb', 'profile'].map(async (publicId) => ({
+          [publicId]: await uploadToCloudinary(buffer, publicId),
+        }))
       );
-      return results.map((result) => result.secure_url);
+      const results = resultsArr.reduce((acc, curr) => {
+        acc = { ...acc, ...curr };
+        return acc;
+      }, {});
+      return results;
     } catch (err) {
       console.error(`Error uploading Images:`, err);
       throw err;

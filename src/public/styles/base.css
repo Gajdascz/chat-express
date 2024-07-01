@@ -16,7 +16,7 @@
   --color-tertiary: var(--color-sky-blue);
   --color-interactive: var(--color-ut-orange);
 
-  --color-disabled-overlay: rgba(255, 255, 255, 1);
+  --color-disabled-overlay: rgba(255, 255, 255, 0.55);
 
   --color-error: #ff3b3b;
   --color-valid: #005a00;
@@ -25,7 +25,7 @@
   --shadow-medium: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   --shadow-dark: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
-  --interactive-glow: 0 10px 20px rgba(251, 133, 0, 0.25), 0 0 5px rgba(251, 133, 0, 0.5);
+  --interactive-glow: 0 0 10px var(--color-interactive);
 }
 
 body {
@@ -38,13 +38,19 @@ body {
 /*#region Nav */
 nav {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 1em;
+  width: 100%;
 }
-.nav-links-container {
+nav > div.full-nav-container {
   display: flex;
-  gap: 1em;
+  justify-content: space-between;
+  flex: 1;
+}
+.nav-action-links-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .nav-header-link,
 .nav-link {
@@ -54,6 +60,22 @@ nav {
 }
 .nav-header-link {
   font-size: 2.25rem;
+}
+.mobile-nav-container {
+  display: none;
+}
+.mobile-nav-container > .dropdown-container > button {
+  font-size: 2rem;
+  padding: 0 0.25em;
+  border-radius: 10px;
+  background-color: var(--color-interactive);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  box-shadow: var(--shadow-medium);
+}
+.mobile-nav-container > .dropdown-container > button:has(img) {
+  background-color: transparent;
+  padding: 0.25em;
 }
 /*#endregion Nav */
 
@@ -69,7 +91,7 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 80px;
+  top: 65px;
   right: 40px;
   gap: 0.25em;
   box-shadow: var(--shadow-medium);
@@ -121,16 +143,17 @@ nav {
 
 button:has(img.avatar-thumb) {
   background-color: transparent;
-  width: min-content;
-  height: min-content;
+  width: fit-content;
+  height: fit-content;
   border: none;
-  border: 2px solid var(--color-interactive);
+  padding: 0;
   border-radius: 50%;
-  padding: 0.1em;
 }
 .avatar-thumb {
   width: 40px;
   height: 40px;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
 }
 .avatar-profile {
   width: 125px;
@@ -189,8 +212,10 @@ button.primary:hover {
   box-shadow: var(--shadow-dark);
 }
 
+.error-container *,
 .error-message {
   color: var(--color-error);
+  font-style: italic;
 }
 
 /*#region field-container */
@@ -282,7 +307,7 @@ select,
   padding: 1em;
   max-height: 50vh;
   overflow-y: scroll;
-  border-radius: 20px;
+  border-radius: 20px 0 0 20px;
   box-shadow: var(--shadow-medium);
   position: relative;
   scrollbar-width: thin;
@@ -293,7 +318,6 @@ select,
 }
 .message-container:has(.message-wrapper:hover) > .message-wrapper:hover {
   filter: grayscale(0);
-  transform: scale(1.01);
   box-shadow: var(--shadow-light);
 }
 .message-input-wrapper {
@@ -343,12 +367,15 @@ textarea.message-body-input:focus {
 
 .disabled-messaging-overlay {
   position: relative;
+  background-color: var(--color-disabled-overlay);
+  cursor: default;
 }
 .disabled-messaging-overlay > .disabled-overlay-message {
+  flex-wrap: wrap;
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color:;
+  background-color: var(--color-disabled-overlay);
   z-index: 3;
   border-radius: 10px;
   display: flex;
@@ -356,6 +383,12 @@ textarea.message-body-input:focus {
   align-items: center;
   font-weight: bold;
   font-size: 1.5rem;
+}
+.disabled-overlay-text-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 /*#endregion chatbox*/
 
@@ -367,6 +400,11 @@ textarea.message-body-input:focus {
   align-items: center;
   height: 100%;
   width: 100%;
+}
+.user-profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 
 /*#region User Profile Page */
@@ -414,12 +452,28 @@ textarea.message-body-input:focus {
   border: 2px solid var(--color-primary);
   box-shadow: var(--shadow-light);
 }
-.message-header {
+.message-header-wrapper {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 0.5em;
 }
+.message-header-wrapper > form.delete-message-form {
+  padding: 0;
+  margin-left: auto;
+}
+.message-header-wrapper > form.delete-message-form > button {
+  border-radius: 10px;
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+.message-header-wrapper > form.delete-message-form > button:hover {
+  color: var(--color-error);
+  border-color: var(--color-error);
+  box-shadow: var(--shadow-medium);
+}
+
 .message-avatar {
   border: 2px solid var(--color-primary);
   border-radius: 50%;
@@ -431,7 +485,16 @@ textarea.message-body-input:focus {
   align-items: baseline;
   gap: 0.25em;
 }
-
+.message-delete-button {
+  margin-left: auto;
+  border-radius: 20px;
+  border: 1px solid black;
+  background-color: transparent;
+}
+.message-delete-button:hover {
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
 .message-title {
   font-weight: bold;
   font-size: 1rem;
@@ -461,3 +524,52 @@ textarea.message-body-input:focus {
   flex: 1;
 }
 /*#endregion Message*/
+
+.field-button-wrapper {
+  display: flex;
+  border: 2px solid var(--color-primary);
+  width: min-content;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.field-button-wrapper > button,
+.field-button-wrapper * > input {
+  border: none;
+  border-radius: 0;
+  padding: 0.5em;
+}
+
+form#user-upgrade-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  max-width: min-content;
+}
+form#user-upgrade-form h5 {
+  font-style: italic;
+}
+
+form#update-avatar-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+@media (max-width: 476px) {
+  nav > div.full-nav-container {
+    display: none;
+  }
+  nav > div.mobile-nav-container {
+    display: flex;
+  }
+  .dropdown-content-container {
+    top: 65px;
+    left: 40px;
+    transform-origin: top left;
+    transform: scale(0) rotate(90deg);
+    border: 3px solid var(--color-primary);
+  }
+  body:has(.dropdown-container.open) main {
+    filter: blur(1px) grayscale(1);
+  }
+}

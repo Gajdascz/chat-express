@@ -5,8 +5,8 @@ import logger from '../core/morgan.js';
 import rateLimit from '../core/rateLimit.js';
 import expressMiddleware from '../core/express.js';
 import session from '../core/expressSession.js';
-import passport from '../authentication/core/passport.js';
-import addUserToLocals from '../authentication/core/addUserToLocals.js';
+import passport from '../authentication/passport.js';
+import addUserToLocals from '../authentication/addUserToLocals.js';
 
 // prettier-ignore
 export default [

@@ -9,7 +9,7 @@ export default (formInputs, errors) => {
   }, {});
   errors.forEach((err) => {
     const input = inputsMap[err.path];
-    if (!input) throw new Error(`Selector: ${err.path} did not find a valid element.`);
+    if (!input) return console.warn(`Selector: ${err.path} did not find a valid element.`);
     input.dataset.status = 'invalid';
     const errMsg = document.createElement('p');
     errMsg.textContent = err.msg;

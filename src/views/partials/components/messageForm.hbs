@@ -1,4 +1,4 @@
-<form method='POST' action='{{action}}' id='{{formId}}'>
+<form method='POST' action='{{action}}' id='{{formId}}' data-handle={{default handle 'false'}}>
   <label for='{{formId}}-title-input' style='display:none;'>Message Title</label>
   <label for='{{formId}}-body-input' style='display:none;'>Message Body</label>
   <input type='hidden' name='messageContext' value='{{camelCase formId}}' />
@@ -22,4 +22,5 @@
       <button type='submit' class='primary message-send-button'>Send</button>
     </div>
   </div>
+  <script type='module' src='../scripts/formHandler/index.js'></script>
 </form>

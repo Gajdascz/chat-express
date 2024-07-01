@@ -1,1 +1,18 @@
-{{> chatbox chatContext=chatContext}}
+<section class='chatbox-container'>
+  <script type="module" src="../../../scripts/messageHandler.js"></script>
+  <input type="hidden" value="{{chatContext}}" data-chat-context="{{chatContext}}">
+  <input type="hidden" value="{{default currentUser.status 'undefined'}}" id="user-status">
+  <div class='message-container'></div>
+  {{#if currentUser}}
+  <hr>
+  {{>messageForm formId='global-chat' action='/message/global' handle='true'}}
+  {{else}}
+    <div class="disabled-messaging-overlay">
+      <p class="disabled-overlay-message">
+        <span class="disabled-overlay-text-wrapper"><a href="/user/login">Login</a> or <a href="/user/register">Register</a>to start messaging.</span>
+        </p>
+      {{>messageForm formId='' action=''}}
+    </div>
+  {{/if}}
+</section>
+

@@ -1,5 +1,5 @@
 <section class="register-page">
-  <form method='POST' action="/user/register" class="card" enctype="multipart/form-data">
+  <form method='POST' action="/user/register" class="card" enctype="multipart/form-data" data-handle="true">
     <h1 class="card-header">Register</h1>
     {{>field 
         id='avatar'  
@@ -49,19 +49,6 @@
           placeholder='Confirm Password*' 
           label='Confirm Password' hideLabel=true}}
     </div>
-    {{>field 
-        id='recovery-question'
-        select=true
-        options= recoveryQuestions
-        label='Recovery Question' hideLabel=true
-    }}
-    {{>field 
-        id='recovery-question-answer'
-        type='text' 
-        required=true 
-        placeholder='Recovery Question Answer*'
-        label='Recovery Question Answer' hideLabel=true
-    }}
     <button class="primary">Submit</button>
     <p class="card-secondary-text">Already Registered? <a href="/user/login">Login</a></p>
   </form>

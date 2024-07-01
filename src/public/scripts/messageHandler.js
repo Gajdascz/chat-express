@@ -1,9 +1,17 @@
-const getRequiredElements = () => {
+const statusMap = {
+  undefined: 0,
+  basic: 1,
+  member: 2,
+  admin: 3,
+};
+
+const parseForm = () => {
   const context = document.querySelector('input[data-chat-context]')?.value;
   if (!context) throw new Error(`messageHandler imported with no chat-context on page`);
   const messageContainer = document.querySelector('.message-container');
   if (!messageContainer) throw new Error(`No element with .message-container class found to display message.`);
-  return { context, messageContainer };
+  const userStatus = document.querySelector('#user-status')?.value;
+  return { context, messageContainer, userStatus };
 };
 
 const fetchMessages = async (context) => {
@@ -24,19 +32,47 @@ const createAvatar = (url, className) => {
   return img;
 };
 
-const createMessageElements = (senderAvatar, username, title, bodyText, createdAt) => ({
+const handleDelete = async (e) => {
+  const form = e.target;
+  try {
+    const response = await fetch(form.action, { method: 'POST' });
+    const json = await response.json();
+    if (json.alertMsg) alert(json.alertMsg);
+    if (json.redirect) location.replace(response.redirect);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const createDeleteMessageForm = (_id) => {
+  const form = createElement('form', 'delete-message-form');
+  form.action = `/message/${_id}/delete`;
+  form.method = 'POST';
+  form.append(createElement('button', 'delete-message-button', 'X'));
+  form.dataset.handle = 'true';
+  return form;
+};
+
+const createMessageElements = (senderAvatar, username, title, bodyText, createdAt, userStatus, _id) => ({
   messageWrapper: createElement('div', 'message-wrapper'),
-  headerWrapper: createElement('div', 'message-header'),
+  headerWrapper: createElement('div', 'message-header-wrapper'),
   avatar: createAvatar(senderAvatar, 'message-avatar'),
   messageTitle: createElement('span', 'message-title', title),
-  username: createElement('span', 'message-username', username),
+  username:
+    statusMap[userStatus] >= 2
+      ? createElement('span', 'message-username', username)
+      : createElement('span', 'message-username', '[redacted]'),
   bodyWrapper: createElement('div', 'message-body-wrapper'),
   bodyText: createElement('span', 'message-body-text', bodyText),
-  timestamp: createElement('span', 'message-timestamp', createdAt),
+  timestamp:
+    statusMap[userStatus] >= 2
+      ? createElement('span', 'message-timestamp', createdAt)
+      : createElement('span', 'message-timestamp', '[redacted]'),
   usernameTitleWrapper: createElement('div', 'message-username-title-wrapper'),
+  deleteForm: statusMap[userStatus] === 3 ? createDeleteMessageForm(_id) : null,
 });
 
-const getMessageElement = ({ senderAvatar, senderUsername, title, createdAt, body }) => {
+const getMessageElement = (userStatus, { senderAvatar, senderUsername, title, createdAt, body, _id }) => {
   const {
     messageWrapper,
     headerWrapper,
@@ -47,21 +83,23 @@ const getMessageElement = ({ senderAvatar, senderUsername, title, createdAt, bod
     bodyText,
     timestamp,
     usernameTitleWrapper,
-  } = createMessageElements(senderAvatar, senderUsername, title, body, createdAt);
+    deleteForm,
+  } = createMessageElements(senderAvatar, senderUsername, title, body, createdAt, userStatus, _id);
   messageWrapper.append(headerWrapper, bodyWrapper);
   usernameTitleWrapper.append(username, messageTitle);
   headerWrapper.append(avatar, usernameTitleWrapper);
+  if (deleteForm) headerWrapper.append(deleteForm);
   bodyWrapper.append(bodyText, timestamp);
   return messageWrapper;
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    const { context, messageContainer } = getRequiredElements();
+    const { context, userStatus, messageContainer } = parseForm();
     const messages = await fetchMessages(context);
     if (messages.length === 0) messageContainer.append(`No messages found. Start the conversation!`);
     messages.forEach((msg) => {
-      const element = getMessageElement(msg);
+      const element = getMessageElement(userStatus, msg);
       messageContainer.append(element);
     });
   } catch (err) {

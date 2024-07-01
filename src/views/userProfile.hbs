@@ -4,11 +4,48 @@
       <img src='{{avatar.profile}}' class='avatar-profile' />
       <div class='profile-info-text-wrapper'>
         <h1 class='card-header'>{{username}}</h1>
-        <h4><span>Status:</span> {{status}}</h4>
+        <h4><span>status:</span> {{status}}</h4>
         {{#if fullName}}
           <h4>{{fullName}}</h4>
         {{/if}}
       </div>
     </div>
+    {{#isBasicUser status}}
+      <div class="card">
+        <form method="POST" action="/user/{{username}}/upgrade/basic-to-member" id="user-upgrade-form" data-handle="true">
+          <h3>Enter the correct answer to the question below to upgrade your membership status.</h3>
+          <div class="question-wrapper">
+            <h4>What is the downward acceleration constant of gravity near Earth's surface?</h4>
+            <h5>(Provide your answer in meters per second squared, rounded to the nearest hundredth decimal place, and using ^ to denote exponentiation, e.g., 18.9 for 18.9 m/s^2)</h5>
+        <!-- Given up? Here's the answer: -9.81m/s^2 -->
+          </div>
+          <div class="field-button-wrapper">
+            {{>field 
+                id='user-upgrade-answer'  
+                type='text' 
+                placeholder='' 
+                label='' hideLabel=true
+            }}
+            <button type="submit" class="primary">Submit</button>  
+          </div>
+          <div class="upgrade-form-error-container error-container">
+
+          </div>
+        </form>
+        <script type="module" src="../scripts/upgradeQuestionHandler.js"></script>
+      </div>
+      {{else}}
+      <form method="POST" id='update-avatar-form' action="/user/{{username}}/update/avatar" enctype="multipart/form-data" class="card" data-handle="true">
+        {{>field 
+            id='avatar'  
+            type='file' 
+            accept='image/*' 
+            placeholder='Profile Avatar' 
+            label='UpdateProfile Avatar' hideLabel=false
+        }} 
+        <button type="submit" class="primary">Update Avatar</button>
+        <script type="module" src="../scripts/formHandler/index.js"></script>
+      </form>
+    {{/isBasicUser}}
   {{/with}}
 </section>
