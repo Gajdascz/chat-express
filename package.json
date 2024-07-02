@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node ./src/bin/www.js",
     "startDev": "node --watch ./src/bin/www.js",
     "startDebug": "DEBUG=chatExpress:* npm run startDev"
   },
