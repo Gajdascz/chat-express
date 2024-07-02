@@ -2,7 +2,7 @@
 
 Created as part of [The Odin Project Curriculum](https://www.theodinproject.com/lessons/nodejs-chatExpress), ChatExpress provides an introduction to local user authentication and web session management. The primary goal was to implement layered access to application features and data based on the [status](#Status) of a user.
 
-**Live Preview:** [Deployed using Railway]()
+**Live Preview:** [Deployed using Railway](https://chatexpress-production.up.railway.app/)
 
 ## User
 
