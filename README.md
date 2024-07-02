@@ -1,6 +1,6 @@
 # ChatExpress
 
-Created as part of [The Odin Project Curriculum](https://www.theodinproject.com/lessons/nodejs-members-only),provided an introduction to local user authentication and web session management. The primary goal was to implement layered access to application features and data based on the [status](#Status) of a user through route authorization.
+Created as part of [The Odin Project Curriculum](https://www.theodinproject.com/lessons/nodejs-chatExpress), ChatExpress provides an introduction to local user authentication and web session management. The primary goal was to implement layered access to application features and data based on the [status](#Status) of a user.
 
 **Live Preview:** [Deployed using Railway]()
 
@@ -43,6 +43,7 @@ User status defines the level of access a user has to the app's data and feature
   - Configured and deployed a local authentication strategy using the `Passport.js` middleware.
     - Paired with `express-session` to persist authentication state across sessions.
     - Set up route authorization to securely control user access.
+    - Implemented `bcrypt` password hashing.
 - **Cloudinary**
   - **User Avatar Management:** Utilized the `Cloudinary` Node.js SDK to handle user avatar uploads.
     - Completed the "_Introduction to Cloudinary for Node.js Developers (90-Minute Course)_"
@@ -84,14 +85,6 @@ User status defines the level of access a user has to the app's data and feature
 
 </details>
 
-## Improvements
-
-- Complete Item implementation.
-- Clean up and polish the user interface.
-- Improve and modularize CSS.
-- Implement more account types.
-- Restructure project files.
-
 ## Created With
 
 <details><summary>Core</summary>
@@ -111,6 +104,7 @@ User status defines the level of access a user has to the app's data and feature
 
 - [**express-session**](https://github.com/expressjs/session#readme): Establishes state authenticated persistence across sessions.
 - [**Passport**](https://www.passportjs.org/): Node.js Authentication Middleware.
+- [**bcrypt**](https://www.npmjs.com/package/bcrypt): Powerful hashing library.
 - [**debug**](https://github.com/debug-js/debug/): Provides console debugging based on application environment and namespaces.
 - [**dotenv**](https://github.com/motdotla/dotenv/): Loads environment variables from .env\* file(s) into process.env.
 - [**cookie-parser**](https://github.com/expressjs/cookie-parser): Parses cookie headers and populates the req.cookies with an object keyed by the cookie names.

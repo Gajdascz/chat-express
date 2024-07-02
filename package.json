@@ -1,5 +1,5 @@
 {
-  "name": "members-only",
+  "name": "chatExpress",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "startDev": "node --watch ./src/bin/www.js",
-    "startDebug": "DEBUG=members-only:* npm run startDev"
+    "startDebug": "DEBUG=chatExpress:* npm run startDev"
   },
   "author": "",
   "license": "ISC",

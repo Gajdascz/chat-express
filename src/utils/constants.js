@@ -21,22 +21,11 @@ const USER_STATUS_MAP = {
   member: 1,
   admin: 999,
 };
-const MESSAGE_REACTIONS = {
-  LIKE: 'like',
-  DISLIKE: 'dislike',
-};
 
 const FORM_SUBMITTER_CLIENT_SCRIPT = '<script src="../scripts/formSubmitter.js" type="module" defer></script>';
 
 const AVATAR_PUBLIC_IDS = ['original', 'thumb', 'profile'];
 
-const ROUTES = {
-  HOME: '/',
-  USER: '/user',
-  LOGOUT: '/user/logout',
-  LOGIN: '/user/login',
-  REGISTER: '/user/register',
-};
 export {
   SUCCESS,
   FAIL,
@@ -46,8 +35,6 @@ export {
   P_VIEWS,
   USER_STATUSES,
   USER_STATUS_MAP,
-  MESSAGE_REACTIONS,
   FORM_SUBMITTER_CLIENT_SCRIPT,
   AVATAR_PUBLIC_IDS,
-  ROUTES,
 };

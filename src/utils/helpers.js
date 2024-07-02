@@ -3,7 +3,7 @@ import path from 'node:path';
 import createDebug from 'debug';
 import { DateTime } from 'luxon';
 
-const getDebug = (namespace) => createDebug(`members-only:${namespace}`);
+const getDebug = (namespace) => createDebug(`chatExpress:${namespace}`);
 const getSubDirectories = async (baseDir, includeBase = false) => {
   try {
     const dirEntries = await readdir(baseDir, { withFileTypes: true, recursive: true });

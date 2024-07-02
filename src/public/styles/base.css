@@ -422,7 +422,7 @@ form#user-upgrade-form {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  max-width: min-content;
+  max-width: fit-content;
 }
 form#user-upgrade-form h5 {
   font-style: italic;
