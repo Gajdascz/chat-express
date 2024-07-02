@@ -120,7 +120,8 @@ User status defines the level of access a user has to the app's data and feature
 - [**ESLint Config Prettier**](https://github.com/prettier/eslint-config-prettier): Turns off conflicting and/or unnecessary ESLint rules for Prettier.
 - [**Prettier**](https://prettier.io/): Code formatter to enforce consistency.
 - [**Luxon**](https://moment.github.io/luxon/#/): Javascript date and time wrapper.
-- [**Streamifier**](https://www.npmjs.com/package/streamifier): Converts a Buffer/String into a readable stream
+- [**Streamifier**](https://www.npmjs.com/package/streamifier): Converts a Buffer/String into a readable stream.
+- [**connect-mongo**](https://www.npmjs.com/package/connect-mongo): Creates a session store in the provided MongoDB.
 </details>
 
 <details><summary>Development and Deployment</summary>
