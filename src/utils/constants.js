@@ -1,16 +1,19 @@
-import path from 'node:path';
+import { dirname, resolve, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const SUCCESS = `\x1b[32mSuccess`;
 const FAIL = `\x1b[31mFail`;
 
 // Paths
-const P_ROOT = path.resolve(import.meta.dirname, '../..');
-const P_SRC = path.join(P_ROOT, 'src');
-const P_PUBLIC = path.join(P_SRC, 'public');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const P_ROOT = resolve(__dirname, '../..');
+const P_SRC = join(P_ROOT, 'src');
+const P_PUBLIC = join(P_SRC, 'public');
 const P_VIEWS = {
-  MAIN: path.join(P_SRC, 'views'),
-  LAYOUTS: path.join(P_SRC, 'views', 'layouts'),
-  PARTIALS: path.join(P_SRC, 'views', 'partials'),
+  MAIN: join(P_SRC, 'views'),
+  LAYOUTS: join(P_SRC, 'views', 'layouts'),
+  PARTIALS: join(P_SRC, 'views', 'partials'),
 };
 
 const USER_STATUSES = { BASIC: 'basic', MEMBER: 'member', ADMIN: 'admin' };
