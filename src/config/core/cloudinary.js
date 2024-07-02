@@ -39,6 +39,8 @@ const avatar = {
             }
           }
         );
+        // Converts the buffer into a readable stream
+        // Pipes the readable stream into the uploadStream (the buffer data is streamed directly to Cloudinary)
         streamifier.createReadStream(buffer).pipe(uploadStream);
       });
     };
