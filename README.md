@@ -2,7 +2,7 @@
 
 A real-time messaging app built with NodeJS, Express, and MongoDB. Includes user authentication, data/session persistence, user Avatars, and vulgarity filtering. ChatExpress's name is inspired by it being a Chatting application built with the Express library.
 
-**Live Preview:** 🚧 Migrating from Railway
+[**Live Preview:** Deployed Using Koyeb](https://occasional-juliet-gajdascz-9e9ccef2.koyeb.app/)
 
 ## User
 
@@ -73,9 +73,8 @@ User status defines the level of access a user has to the app's data and feature
   - **Schema Design and Document Management:** Created and structured document schemas using `Mongoose`.
     - Stored, managed, and executed queries on MongoDB documents.
     - Utilized Mongo's aggregation framework to retrieve and return specific data.
-<!-- - **Deployment**
-  - **Platform:** Deployed using [Railway](https://railway.app/).
-    - Leveraged Railway's robust and intuitive platform to deploy and manage fullstack applications efficiently. -->
+- **Deployment**
+  - **Platform:** Deployed using [Koyeb](https://www.koyeb.com/).
 - **UML Class Diagrams**
   - **Tool:** Used [plantUML](https://plantuml.com/) to create UML Class diagram.
     - Planned the general structure of database document models.
@@ -129,7 +128,7 @@ User status defines the level of access a user has to the app's data and feature
 <details><summary>Development and Deployment</summary>
 
 - [**PlantUML**](https://plantuml.com/): Diagram tool.
-<!-- - [**Railway**](https://railway.app/): Infrastructure platform for managing, monitoring, and deploying full-stack web applications. -->
+- [**Koyeb**](https://www.koyeb.com/): Infrastructure platform for managing, monitoring, and deploying full-stack web applications.
 - [**MongoDB Atlas**](https://www.mongodb.com/): Cloud database service that automates deployment, scaling, and management of MongoDB clusters.
 - [**GitHub**](https://github.com/): Remote repository hosting.
 - [**Git**](https://git-scm.com/): Version control and source code management.
