@@ -1,8 +1,8 @@
 # ChatExpress
 
-Created as part of [The Odin Project Curriculum](https://www.theodinproject.com/lessons/nodejs-chatExpress), ChatExpress provides an introduction to local user authentication and web session management. The primary goal was to implement layered access to application features and data based on the [status](#Status) of a user.
+A real-time messaging app built with NodeJS, Express, and MongoDB. Includes user authentication, data/session persistence, user Avatars, and vulgarity filtering. ChatExpress's name is inspired by it being a Chatting application built with the Express library.
 
-**Live Preview:** [Deployed using Railway](https://chatexpress-production.up.railway.app/)
+**Live Preview:** 🚧 Migrating from Railway
 
 ## User
 
@@ -73,9 +73,9 @@ User status defines the level of access a user has to the app's data and feature
   - **Schema Design and Document Management:** Created and structured document schemas using `Mongoose`.
     - Stored, managed, and executed queries on MongoDB documents.
     - Utilized Mongo's aggregation framework to retrieve and return specific data.
-- **Deployment**
+<!-- - **Deployment**
   - **Platform:** Deployed using [Railway](https://railway.app/).
-    - Leveraged Railway's robust and intuitive platform to deploy and manage fullstack applications efficiently.
+    - Leveraged Railway's robust and intuitive platform to deploy and manage fullstack applications efficiently. -->
 - **UML Class Diagrams**
   - **Tool:** Used [plantUML](https://plantuml.com/) to create UML Class diagram.
     - Planned the general structure of database document models.
@@ -98,6 +98,7 @@ User status defines the level of access a user has to the app's data and feature
 - [**Handlebars**](https://handlebarsjs.com/): JavaScript server-side template engine.
 - [**mongoose**](https://mongoosejs.com/): MongoDB Object Data Manager (ODM).
 - [**Cloudinary**](https://cloudinary.com/): Image API Platform.
+
 </details>
 
 <details><summary>Libraries</summary>
@@ -122,19 +123,21 @@ User status defines the level of access a user has to the app's data and feature
 - [**Luxon**](https://moment.github.io/luxon/#/): Javascript date and time wrapper.
 - [**Streamifier**](https://www.npmjs.com/package/streamifier): Converts a Buffer/String into a readable stream.
 - [**connect-mongo**](https://www.npmjs.com/package/connect-mongo): Creates a session store in the provided MongoDB.
+
 </details>
 
 <details><summary>Development and Deployment</summary>
 
 - [**PlantUML**](https://plantuml.com/): Diagram tool.
-- [**Railway**](https://railway.app/): Infrastructure platform for managing, monitoring, and deploying full-stack web applications.
+<!-- - [**Railway**](https://railway.app/): Infrastructure platform for managing, monitoring, and deploying full-stack web applications. -->
 - [**MongoDB Atlas**](https://www.mongodb.com/): Cloud database service that automates deployment, scaling, and management of MongoDB clusters.
 - [**GitHub**](https://github.com/): Remote repository hosting.
 - [**Git**](https://git-scm.com/): Version control and source code management.
+
 </details>
 
 ## License
 
-Copyright © 2024 Nolan Gajdascz | GitHub
+MIT
 
-This project is licensed under the GNU General Public License v3.0 - see the LICENSE file for details.
+Copyright © 2024-2025 Nolan Gajdascz | [GitHub](https://github.com/gajdascz)
