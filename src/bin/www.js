@@ -34,7 +34,7 @@ const onListening = () => {
   debug(`Listening on ${bind}`);
 };
 
-const debug = createDebug('chatExpress:www.js');
+const debug = createDebug('chat-express:www.js');
 
 const port = normalizePort(process.env.PORT);
 app.set('port', port);

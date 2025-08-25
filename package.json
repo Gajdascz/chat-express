@@ -1,5 +1,5 @@
 {
-  "name": "chatExpress",
+  "name": "chat-express",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node ./src/bin/www.js",
     "startDev": "node --watch ./src/bin/www.js",
-    "startDebug": "DEBUG=chatExpress:* npm run startDev"
+    "startDebug": "DEBUG=chat-express:* npm run startDev"
   },
   "author": "",
   "license": "ISC",
