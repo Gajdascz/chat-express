@@ -31,6 +31,9 @@ initHbs(app);
 // 5. Initialize application middleware
 app.use(baseMiddleware);
 
+// If behind a proxy (e.g. when deployed), trust the proxy to get the correct client IP for rate limiting
+app.set('trust proxy',true)
+
 // 6. Set Base Routes
 app.get('/', appController.getIndex);
 app.use('/user', userRouter);
